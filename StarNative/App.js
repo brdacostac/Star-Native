@@ -26,12 +26,6 @@ const HomeStack = createNativeStackNavigator();
 
 export default function App() {
   return (
-<<<<<<< HEAD
-    <View style={styles.container}>
-      <Text>Je t'aime mon bebou!</Text>
-      <StatusBar style="auto" />
-    </View>
-=======
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="First">
@@ -55,7 +49,6 @@ export default function App() {
         </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
->>>>>>> ae9d4c81d19ee12dba7d4ce9ce41faf48ae4f46b
   );
 }
 
