@@ -1,12 +1,9 @@
-import { View, Text, Button } from 'react-native';
+import { View, Text } from 'react-native';
 
 export default function HomeScreen() {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View>
               <Text>Home Screen</Text>
-              <Button
-                title="Go to Details"
-                />
             </View>
           );
   }
