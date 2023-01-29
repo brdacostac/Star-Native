@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './src/components/HomeScreen';
-import DetailsScreen from './src/components/DetailsScreen';
 
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
