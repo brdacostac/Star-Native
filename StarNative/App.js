@@ -5,23 +5,29 @@ const Stack = createNativeStackNavigator();
 
 
 import HomeScreen from "./src/components/HomeScreen";
+import Navigation from './src/navigation/Navigation';
 
 
 export default function App() {
-  return (
+  //return (
+    return (
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home"
-                        component={HomeScreen}
-                        options={{
-                            title:"Welcome",
-                            headerStyle: {backgroundColor: '#03203f',},
-                            headerTintColor: '#fff',
-                            headerTitleStyle: {fontWeight: 'bold', alignSelf:'center'}
-                        }}
-          />
-        </Stack.Navigator>
+        <Navigation />
       </NavigationContainer>
-  );
+    );
+      // <NavigationContainer>
+      //   <Stack.Navigator>
+      //     <Stack.Screen name="Home"
+      //                   component={HomeScreen}
+      //                   options={{
+      //                       title:"Welcome",
+      //                       headerStyle: {backgroundColor: '#03203f',},
+      //                       headerTintColor: '#fff',
+      //                       headerTitleStyle: {fontWeight: 'bold', alignSelf:'center'}
+      //                   }}
+      //     />
+      //   </Stack.Navigator>
+      // </NavigationContainer>
+  //);
 }
 
