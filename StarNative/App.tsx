@@ -1,10 +1,15 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-const Stack = createNativeStackNavigator();
+//import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//const Stack = createNativeStackNavigator();
 
+import { createStackNavigator} from '@react-navigation/stack';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-import HomeScreen from "./src/components/HomeScreen";
+const Tab = createMaterialBottomTabNavigator();
+const Stack = createStackNavigator();
+
+import HomeScreen from "./src/screens/HomeScreen";
 import Navigation from './src/navigation/Navigation';
 
 
@@ -12,7 +17,9 @@ export default function App() {
   //return (
     return (
       <NavigationContainer>
-        <Navigation />
+        <Stack.Navigator >
+          <Stack.Screen name="Root" component={Navigation} options={{ headerShown: false }} />
+        </Stack.Navigator>
       </NavigationContainer>
     );
       // <NavigationContainer>

@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { Platform, Switch } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import HomeScreen from '../components/HomeScreen';
-import DetailsScreen from '../components/DetailsScreen';
+import HomeScreen from '../screens/HomeScreen';
+import DetailsScreen from '../screens/DetailsScreen';
 
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';

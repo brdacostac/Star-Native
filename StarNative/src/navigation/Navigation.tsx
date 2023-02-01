@@ -1,7 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/Ionicons';
-import HomeScreen from '../components/HomeScreen';
+//import Icon from 'react-native-vector-icons/Ionicons';
+import HomeScreen from "../screens/HomeScreen";
+import CharactersScreen from '../screens/CharactersScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,14 +23,14 @@ export default function Navigation() {
             iconName = focused ? 'ios-notifications' : 'ios-notifications';
           }
 
-          return <Icon name={iconName} size={size} color={color} />;
+          return "";
         },
         activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
       })} 
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Characters" component={HomeScreen} />
+      <Tab.Screen name="Characters" component={CharactersScreen} />
       <Tab.Screen name="Favorites" component={HomeScreen} />
       <Tab.Screen name="Settings" component={HomeScreen} />
     </Tab.Navigator>
