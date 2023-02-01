@@ -9,7 +9,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
-import HomeScreen from "./src/screens/HomeScreen";
+
 import Navigation from './src/navigation/Navigation';
 
 
