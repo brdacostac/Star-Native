@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from "../screens/HomeScreen";
 import CharactersScreen from '../screens/CharactersScreen';
 import {NavigationContainer} from "@react-navigation/native";
+import {Image} from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,50 +16,45 @@ export default function Navigation() {
                 <BottomTabNavigator.Screen name="Home" component={HomeScreen}
                                            options={{
                                                title: 'Home',
-                                               tabBarIcon: ({color}) => <HomeBarIcon name={'../../assets/img/icon.png'} color={color}/>
+                                               tabBarIcon: ({color}) => <BarIcon name="iconHome" color={color}/>
                                            }}/>
                 <BottomTabNavigator.Screen name="Characters" component={CharactersScreen}
                                            options={{
                                                title: 'Characters',
-                                               tabBarIcon: ({color}) => <CharactersBarIcon name={'../../assets/img/icon.png'} color={color}/>
+                                               tabBarIcon: ({color}) => <BarIcon name="iconCharacteres" color={color}/>
                                            }}/>
                 <BottomTabNavigator.Screen name="Favorites" component={HomeScreen}
                                            options={{
                                                title: 'Favorites',
-                                               tabBarIcon: ({color}) => <FavoritesBarIcon name={'../../assets/img/icon.png'} color={color}/>
+                                               tabBarIcon: ({color}) => <BarIcon name="iconFavorites" color={color}/>
                                            }}/>
                 <BottomTabNavigator.Screen name="Settings" component={HomeScreen}
                                            options={{
                                                title: 'Settings',
-                                               tabBarIcon: ({color}) => <SettingsBarIcon name={'../../assets/img/icon.png'} color={color} />
+                                               tabBarIcon: ({color}) => <BarIcon name="iconSettings" color={color} />
                                            }}/>
             </BottomTabNavigator.Navigator>
         </NavigationContainer>
     )
 }
 
-function HomeBarIcon(props: {
-    name: string;
-    color: string;
-}) {
-    return <Image size={30} source={require('../../assets/img/icon.png')} />;
-}
+const images = {
+    iconHome: require('../../assets/img/icons/homeIcon.png'),
+    iconCharacteres: require('../../assets/img/icons/characteresIcon.png'),
+    iconFavorites: require('../../assets/img/icons/favoritesIcon.png'),
+    iconSettings: require('../../assets/img/icons/settingsIcon.png'),
+};
 
-function FavoritesBarIcon(props: {
+function BarIcon(props: {
     name: string;
     color: string;
 }) {
-    return <Image size={30} source={require('../../assets/img/icon.png')} />;
-}
-function CharactersBarIcon(props: {
-    name: string;
-    color: string;
-}) {
-    return <Image size={30} source={require('../../assets/img/icon.png')} />;
-}
-function SettingsBarIcon(props: {
-    name: string;
-    color: string;
-}) {
-    return <Image size={5} source={require('../../assets/img/icon.png')} />;
+    const imageSource = images[props.name];
+
+    return (
+        <Image
+            style={{ width: 30, height: 30 }}
+            source={imageSource}
+        />
+    );
 }
