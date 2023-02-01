@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from "../screens/HomeScreen";
 import CharactersScreen from '../screens/CharactersScreen';
 import {NavigationContainer} from "@react-navigation/native";
+import { Image } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -41,24 +42,24 @@ function HomeBarIcon(props: {
     name: string;
     color: string;
 }) {
-    return <Image size={30} source={require('../../assets/img/icon.png')} />;
+    return <Image source={require('../../assets/img/icon.png')} />;
 }
 
 function FavoritesBarIcon(props: {
     name: string;
     color: string;
 }) {
-    return <Image size={30} source={require('../../assets/img/icon.png')} />;
+    return <Image  source={require('../../assets/img/icon.png')} />;
 }
 function CharactersBarIcon(props: {
     name: string;
     color: string;
 }) {
-    return <Image size={30} source={require('../../assets/img/icon.png')} />;
+    return <Image source={require('../../assets/img/icon.png')} />;
 }
 function SettingsBarIcon(props: {
     name: string;
     color: string;
 }) {
-    return <Image size={5} source={require('../../assets/img/icon.png')} />;
+    return <Image source={require('../../assets/img/icon.png')} />;
 }
