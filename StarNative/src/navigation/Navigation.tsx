@@ -3,13 +3,39 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from "../screens/HomeScreen";
 import CharactersScreen from '../screens/CharactersScreen';
-import {NavigationContainer} from "@react-navigation/native";
-import {Image} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { Image } from "react-native";
+import CharactersNavigation from './CharactersNavigation';
 
-const Tab = createBottomTabNavigator();
+const images: { [key: string]: any } = {
+    iconHome: require('../../assets/img/icons/homeIcon.png'),
+    iconCharacteres: require('../../assets/img/icons/characteresIcon.png'),
+    iconFavorites: require('../../assets/img/icons/favoritesIcon.png'),
+    iconSettings: require('../../assets/img/icons/settingsIcon.png'),
+};
 
-export default function Navigation() {
-    const BottomTabNavigator = createBottomTabNavigator();
+interface Props {
+    name: string;
+    color: string;
+}
+
+function BarIcon(props: Props) {
+    const imageSource = images[props.name];
+    if (!imageSource) {
+        return null;
+    }
+
+    return (
+        <Image
+            style={{ width: 30, height: 30, tintColor: props.color }}
+            source={imageSource}
+        />
+    );
+}
+
+const BottomTabNavigator = createBottomTabNavigator();
+
+function Navigation() {
     return (
         <NavigationContainer>
             <BottomTabNavigator.Navigator initialRouteName="Home">
@@ -18,7 +44,7 @@ export default function Navigation() {
                                                title: 'Home',
                                                tabBarIcon: ({color}) => <BarIcon name="iconHome" color={color}/>
                                            }}/>
-                <BottomTabNavigator.Screen name="Characters" component={CharactersScreen}
+                <BottomTabNavigator.Screen name="Characters" component={CharactersNavigation}
                                            options={{
                                                title: 'Characters',
                                                tabBarIcon: ({color}) => <BarIcon name="iconCharacteres" color={color}/>
@@ -38,23 +64,4 @@ export default function Navigation() {
     )
 }
 
-const images = {
-    iconHome: require('../../assets/img/icons/homeIcon.png'),
-    iconCharacteres: require('../../assets/img/icons/characteresIcon.png'),
-    iconFavorites: require('../../assets/img/icons/favoritesIcon.png'),
-    iconSettings: require('../../assets/img/icons/settingsIcon.png'),
-};
-
-function BarIcon(props: {
-    name: string;
-    color: string;
-}) {
-    const imageSource = images[props.name];
-
-    return (
-        <Image
-            style={{ width: 30, height: 30 }}
-            source={imageSource}
-        />
-    );
-}
+export default Navigation;
