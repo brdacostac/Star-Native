@@ -1,39 +1,64 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-//import Icon from 'react-native-vector-icons/Ionicons';
+
 import HomeScreen from "../screens/HomeScreen";
 import CharactersScreen from '../screens/CharactersScreen';
+import {NavigationContainer} from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
-  return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+    const BottomTabNavigator = createBottomTabNavigator();
+    return (
+        <NavigationContainer>
+            <BottomTabNavigator.Navigator initialRouteName="Home">
+                <BottomTabNavigator.Screen name="Home" component={HomeScreen}
+                                           options={{
+                                               title: 'Home',
+                                               tabBarIcon: ({color}) => <HomeBarIcon name={'../../assets/img/icon.png'} color={color}/>
+                                           }}/>
+                <BottomTabNavigator.Screen name="Characters" component={CharactersScreen}
+                                           options={{
+                                               title: 'Characters',
+                                               tabBarIcon: ({color}) => <CharactersBarIcon name={'../../assets/img/icon.png'} color={color}/>
+                                           }}/>
+                <BottomTabNavigator.Screen name="Favorites" component={HomeScreen}
+                                           options={{
+                                               title: 'Favorites',
+                                               tabBarIcon: ({color}) => <FavoritesBarIcon name={'../../assets/img/icon.png'} color={color}/>
+                                           }}/>
+                <BottomTabNavigator.Screen name="Settings" component={HomeScreen}
+                                           options={{
+                                               title: 'Settings',
+                                               tabBarIcon: ({color}) => <SettingsBarIcon name={'../../assets/img/icon.png'} color={color} />
+                                           }}/>
+            </BottomTabNavigator.Navigator>
+        </NavigationContainer>
+    )
+}
 
-          if (route.name === 'Home') {
-            iconName = focused ? 'ios-home' : 'ios-home';
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'ios-person' : 'ios-person';
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'ios-settings' : 'ios-settings';
-          } else if (route.name === 'Notifications') {
-            iconName = focused ? 'ios-notifications' : 'ios-notifications';
-          }
+function HomeBarIcon(props: {
+    name: string;
+    color: string;
+}) {
+    return <Image size={30} source={require('../../assets/img/icon.png')} />;
+}
 
-          return "";
-        },
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
-      })} 
-    >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Characters" component={CharactersScreen} />
-      <Tab.Screen name="Favorites" component={HomeScreen} />
-      <Tab.Screen name="Settings" component={HomeScreen} />
-    </Tab.Navigator>
-  );
-};
-
+function FavoritesBarIcon(props: {
+    name: string;
+    color: string;
+}) {
+    return <Image size={30} source={require('../../assets/img/icon.png')} />;
+}
+function CharactersBarIcon(props: {
+    name: string;
+    color: string;
+}) {
+    return <Image size={30} source={require('../../assets/img/icon.png')} />;
+}
+function SettingsBarIcon(props: {
+    name: string;
+    color: string;
+}) {
+    return <Image size={5} source={require('../../assets/img/icon.png')} />;
+}
