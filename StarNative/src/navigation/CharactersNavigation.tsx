@@ -8,8 +8,8 @@ export default function CharactersNavigation() {
     const Stack = createStackNavigator();
     return (
       <Stack.Navigator initialRouteName="NounoursList">
-        <Stack.Screen name="CharactersList" component={CharactersScreen}/>
-        <Stack.Screen name="CharacterDetails" component={DetailCharacterScreen}/>
+        <Stack.Screen name="CharactersList" component={CharactersScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="CharacterDetails" component={DetailCharacterScreen} options={{headerShown: false}}/>
       </Stack.Navigator>
     )
   }
