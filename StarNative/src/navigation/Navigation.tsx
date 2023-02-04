@@ -38,25 +38,34 @@ const BottomTabNavigator = createBottomTabNavigator();
 function Navigation() {
     return (
         <NavigationContainer>
-            <BottomTabNavigator.Navigator initialRouteName="Home">
+            <BottomTabNavigator.Navigator initialRouteName="Home"
+                                          screenOptions={{
+                                              tabBarActiveTintColor: '#ebb807',
+                                              tabBarStyle: { height: 60 },
+                                          }}>
                 <BottomTabNavigator.Screen name="Home" component={HomeScreen}
                                            options={{
                                                title: 'Home',
-                                               tabBarIcon: ({color}) => <BarIcon name="iconHome" color={color}/>
+                                               headerShown: false,
+                                               tabBarIcon: ({color}) => <BarIcon name="iconHome" color={color}/>,
+
                                            }}/>
                 <BottomTabNavigator.Screen name="Characters" component={CharactersNavigation}
                                            options={{
                                                title: 'Characters',
+                                               headerShown: false,
                                                tabBarIcon: ({color}) => <BarIcon name="iconCharacteres" color={color}/>
                                            }}/>
                 <BottomTabNavigator.Screen name="Favorites" component={HomeScreen}
                                            options={{
                                                title: 'Favorites',
+                                               headerShown: false,
                                                tabBarIcon: ({color}) => <BarIcon name="iconFavorites" color={color}/>
                                            }}/>
                 <BottomTabNavigator.Screen name="Settings" component={HomeScreen}
                                            options={{
                                                title: 'Settings',
+                                               headerShown: false,
                                                tabBarIcon: ({color}) => <BarIcon name="iconSettings" color={color} />
                                            }}/>
             </BottomTabNavigator.Navigator>
