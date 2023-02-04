@@ -2,10 +2,10 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from "../screens/HomeScreen";
-import CharactersScreen from '../screens/CharactersScreen';
 import { NavigationContainer } from "@react-navigation/native";
 import { Image } from "react-native";
 import CharactersNavigation from './CharactersNavigation';
+import FavoritesScreen from '../screens/FavoritesScreen';
 
 const images: { [key: string]: any } = {
     iconHome: require('../../assets/img/icons/homeIcon.png'),
@@ -42,22 +42,26 @@ function Navigation() {
                 <BottomTabNavigator.Screen name="Home" component={HomeScreen}
                                            options={{
                                                title: 'Home',
-                                               tabBarIcon: ({color}) => <BarIcon name="iconHome" color={color}/>
+                                               tabBarIcon: ({color}) => <BarIcon name="iconHome" color={color}/>,
+                                               headerShown: false,
                                            }}/>
                 <BottomTabNavigator.Screen name="Characters" component={CharactersNavigation}
                                            options={{
                                                title: 'Characters',
-                                               tabBarIcon: ({color}) => <BarIcon name="iconCharacteres" color={color}/>
+                                               tabBarIcon: ({color}) => <BarIcon name="iconCharacteres" color={color}/>,
+                                               headerShown: false,
                                            }}/>
-                <BottomTabNavigator.Screen name="Favorites" component={HomeScreen}
+                <BottomTabNavigator.Screen name="Favorites" component={FavoritesScreen}
                                            options={{
                                                title: 'Favorites',
-                                               tabBarIcon: ({color}) => <BarIcon name="iconFavorites" color={color}/>
+                                               tabBarIcon: ({color}) => <BarIcon name="iconFavorites" color={color}/>,
+                                               headerShown: false,
                                            }}/>
                 <BottomTabNavigator.Screen name="Settings" component={HomeScreen}
                                            options={{
                                                title: 'Settings',
-                                               tabBarIcon: ({color}) => <BarIcon name="iconSettings" color={color} />
+                                               tabBarIcon: ({color}) => <BarIcon name="iconSettings" color={color} />,
+                                               headerShown: false,
                                            }}/>
             </BottomTabNavigator.Navigator>
         </NavigationContainer>
