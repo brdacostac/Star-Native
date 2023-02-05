@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, Image, Animated, StyleSheet, ScrollView} from 'react-native';
 
+
 export default function HomeScreen() {
     const [fadeAnim] = useState(new Animated.Value(0));
 
@@ -13,6 +14,7 @@ export default function HomeScreen() {
     }, []);
 
     return (
+
         <ScrollView style={styles.container}>
         <View style={styles.container}>
             <Animated.View
