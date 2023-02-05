@@ -5,6 +5,7 @@ import store from './src/store/characterStore';
 import { Provider } from 'react-redux';
 import { loadFavorites, loadFavoritesSuccess } from './src/actions/actionsFavorites';
 import { useEffect, useState } from 'react';
+import { SafeAreaView, StatusBar, StyleSheet, Text } from 'react-native';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -23,15 +24,21 @@ export default function App() {
   }, []);
 
   if (loading) {
-    return <>Loading...</>;
+    return <Text>Loading...</Text>;
   }
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaView style={styles.mainSafeArea}>
       <Provider store={store}>
         <Navigation></Navigation>
       </Provider>
-    </SafeAreaProvider>
+    </SafeAreaView>
   );
 }
 
+const styles = StyleSheet.create({
+  mainSafeArea: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight
+  }
+});

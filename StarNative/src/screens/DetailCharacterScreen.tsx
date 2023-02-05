@@ -1,4 +1,4 @@
-import { View, Text, Button, Image, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, Linking, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -20,7 +20,7 @@ export default function DetailCharacterScreen({route}) {
 
   
   const addToFavorites = () => {
-    if (!favoriteCharacters.includes(character.name)) {
+    if (!favoriteCharacters.includes(character.id)) {
         setIsLike(true);
         dispatch({ type: 'ADD_FAVORITE_CHARACTER', payload: character.name });
       }
@@ -35,55 +35,57 @@ export default function DetailCharacterScreen({route}) {
     
   };
 
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Button
-            title="Go back"
-            onPress={() => navigation.goBack()}
+  return (
+    <View style={{ flex: 1, alignItems: 'center', padding: 20 }}>
+      <Button
+        title="Go back"
+        onPress={() => navigation.goBack()}
+        buttonStyle={{ marginBottom: 20 }}
+      />
+      <Image
+        source={{ uri: character.image }}
+        style={{
+          width: 100,
+          height: 100,
+          borderRadius: 50,
+          overflow: 'hidden',
+          marginBottom: 20
+        }}
+      />
+      <Text style={{ fontWeight: 'bold', marginBottom: 10 }}>{character.name}</Text>
+      <Text style={{ marginBottom: 10 }}>{character.homeworld}</Text>
+      <Text style={{ marginBottom: 10 }}>Height: {character.height}</Text>
+      <Text style={{ marginBottom: 10 }}>Mass: {character.mass}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+        <Text style={{ fontWeight: 'bold' }}>Masters:</Text>
+        <FlatList
+          horizontal={true}
+          data={Array.isArray(character.masters) ? character.masters : [character.masters]}
+          renderItem={({ item }) => <Text style={{ marginLeft: 10 }}>{item}</Text>}
+          keyExtractor={item => item}
+        />
+      </View>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+        <Text style={{ fontWeight: 'bold' }}>Apprentices:</Text>
+        <FlatList
+          horizontal={true}
+          data={Array.isArray(character.apprentices) ? character.apprentices : [character.apprentices]}
+          renderItem={({ item }) => <Text style={{ marginLeft: 10 }}>{item}</Text>}
+          keyExtractor={item => item}
+        />
+      </View>
+      <TouchableOpacity onPress={() => Linking.openURL(character.wiki)}>
+        <Text style={{ color: 'blue' }}>Learn more on Wikipedia</Text>
+      </TouchableOpacity>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
+        <TouchableOpacity onPress={!isLike ? addToFavorites : deleteToFavorites}>
+          <Icon
+            name={isLike ? 'heart' : 'heart-o'}
+            size={30}
+            color={isLike ? 'red' : 'black'}
           />
-          <Image source={{ uri: character.image }} style={{
-                    width: 100, 
-                    height: 100, 
-                    borderRadius: 100, 
-                    overflow: 'hidden'
-                  }} />
-          
-          <Text>{character.name}</Text>
-          <Text>{character.homeworld}</Text>
-          <Text>{character.height}</Text>
-          <Text>{character.mass}</Text>
-          {Array.isArray(character.masters) ? (
-            character.masters.map((master: string) => <Text>{master}</Text>)
-          ) : character.masters ? (
-            <Text>{character.masters}</Text>
-          ) : (
-            <Text>Pas de master</Text>
-          )}
-          {Array.isArray(character.apprentices) ? (
-            character.apprentices.map((apprentice: string) => <Text>{apprentice}</Text>)
-          ) : (
-            <Text>Pas d'apprentit</Text>
-          )}
-          <Text>{character.gender}</Text>
-          {!isLike ? (
-            <Icon
-              name="star"
-              color="blue"
-              size={33}
-              onPress={addToFavorites}
-            />
-          ) : (
-            <Icon
-              name="star"
-              color="green"
-              size={33}
-              onPress={deleteToFavorites}
-            />
-          )}
-          <TouchableOpacity onPress={() => Linking.openURL(character.wiki)}>
-            <Text>Page Wikia de {character.name}</Text>
-          </TouchableOpacity>
-          <Text>{character.species}</Text>
-        </View>
-      );
-  }
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
