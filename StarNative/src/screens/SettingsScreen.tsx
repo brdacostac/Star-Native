@@ -17,9 +17,10 @@ export default function SettingsScreen() {
     const toggleSwitch=() =>{
         if(isEnabled) {
             toggleThemeType()
+            theme.colors.primary='#eb0707'
         } else{
             toggleThemeType()
-
+            theme.colors.primary='#ebb807'
         }
         setIsEnabled(previousState => !previousState)
     }
@@ -31,7 +32,7 @@ export default function SettingsScreen() {
             <Switch
                 onValueChange={(toggleSwitch)}
                 trackColor={{false: 'rgba(0,0,0,0.1)', true:'rgba(229,9,9,0.49)'}}
-                thumbColor={'red'}
+                thumbColor={isEnabled ? '#eb0707' : '#ebb807'}
                 value={isEnabled}
             />
         </Animated.View>

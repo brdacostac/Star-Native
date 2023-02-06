@@ -20,7 +20,11 @@ const lightTheme = {
     colors:{
         ...NavigationDefaultTheme.colors,
         ...PaperDefaultTheme.colors,
+        sideColor : '#ebb807',
     },
+    images:{
+        logo:require('../../assets/img/logoLightSide.png')
+    }
 };
 
 const darkTheme = {
@@ -29,7 +33,11 @@ const darkTheme = {
     colors:{
         ...NavigationDarkTheme.colors,
         ...PaperDarkTheme.colors,
+        sideColor : '#eb0707',
     },
+    images:{
+        logo:require('../../assets/img/logoDarkSide.png')
+    }
 };
 export type Theme = typeof  lightTheme;
 

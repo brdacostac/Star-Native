@@ -4,11 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
-import { NavigationContainer } from "@react-navigation/native";
 import { Image } from "react-native";
 import CharactersNavigation from './CharactersNavigation';
 
 import {ThemeContextProvider, useTheme} from "../context/theme-context";
+import {formToJSON} from "axios";
 
 const images: { [key: string]: any } = {
     iconHome: require('../../assets/img/icons/homeIcon.png'),
@@ -39,12 +39,12 @@ function BarIcon(props: Props) {
 const BottomTabNavigator = createBottomTabNavigator();
 
 function Navigation() {
+    const {theme} = useTheme();
     return (
         <ThemeContextProvider>
-
                 <BottomTabNavigator.Navigator initialRouteName="Home"
                                               screenOptions={{
-                                                  tabBarActiveTintColor: '#ebb807',
+                                                  //tabBarActiveTintColor: theme.colors.sideColor,
                                                   tabBarStyle: { height: 60 },
                                               }}>
                     <BottomTabNavigator.Screen name="Home" component={HomeScreen}
