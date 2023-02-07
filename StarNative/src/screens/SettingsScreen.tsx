@@ -7,6 +7,7 @@ import Animated, {
     withTiming,
 } from 'react-native-reanimated';
 
+
 import {useTheme} from "../context/theme-context";
 import {Headline} from "react-native-paper";
 

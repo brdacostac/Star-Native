@@ -9,6 +9,7 @@ import { Image } from "react-native";
 import CharactersNavigation from './CharactersNavigation';
 
 import {ThemeContextProvider, useTheme} from "../context/theme-context";
+import FavoritesScreen from '../screens/FavoritesScreen';
 
 const images: { [key: string]: any } = {
     iconHome: require('../../assets/img/icons/homeIcon.png'),
@@ -60,7 +61,7 @@ function Navigation() {
                                                    headerShown: false,
                                                    tabBarIcon: ({color}) => <BarIcon name="iconCharacteres" color={color}/>
                                                }}/>
-                    <BottomTabNavigator.Screen name="Favorites" component={HomeScreen}
+                    <BottomTabNavigator.Screen name="Favorites" component={FavoritesScreen}
                                                options={{
                                                    title: 'Favorites',
                                                    headerShown: false,
