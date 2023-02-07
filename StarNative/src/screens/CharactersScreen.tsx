@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import {View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import CardCharacter from './../components/CardCharacter';
 import axios from 'axios';
 import { useEffect, useState, useRef } from 'react';
@@ -27,10 +27,10 @@ export default function CharactersScreen() {
           const filteredData = dataCharacters.filter((item: { name: string; }) => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
         
           return (
-            <View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <TextInput
-                  placeholder="Rechercher un personnage"
+            <View style={styles.searchContainer}>
+                <View style={[styles.searchBar]}>
+                <TextInput style={styles.textInput}
+                  placeholder="Search a characterer"
                   value={searchTerm}
                   onChangeText={text => setSearchTerm(text)}
                   ref={textInputRef}
@@ -48,9 +48,27 @@ export default function CharactersScreen() {
               </View>
               <FlatList 
                 data={filteredData} 
-                renderItem={({ item }) => <CardCharacter props={item} navigation={navigation} />} 
+                renderItem={({ item }) => <CardCharacter props={item} navigation={navigation}/>}
                 keyExtractor={item => item.id}
               />
             </View>
           );
   }
+
+const styles = StyleSheet.create({
+    searchContainer: {
+        flex:1,
+        padding:5,
+        margin:5,
+    },
+    searchBar: {
+        backgroundColor: '#F5F5F5',
+        height: 50,
+        borderRadius: 25,
+        marginBottom: 20,
+    },
+    textInput: {
+        padding: 10,
+    },
+
+});

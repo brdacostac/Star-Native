@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Navigation from './src/navigation/Navigation';
-import {SafeAreaProvider} from "react-native-safe-area-context";
 import store from './src/store/characterStore';
 import { Provider } from 'react-redux';
 import { loadFavorites, loadFavoritesSuccess } from './src/actions/actionsFavorites';
