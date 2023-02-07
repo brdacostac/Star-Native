@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {View, Text, Image, Animated, StyleSheet, ScrollView} from 'react-native';
-
+import {useTheme} from "../context/theme-context";
 
 export default function HomeScreen() {
     const [fadeAnim] = useState(new Animated.Value(0));
+    const {theme} = useTheme();
 
     React.useEffect(() => {
         Animated.timing(fadeAnim, {
@@ -23,13 +24,13 @@ export default function HomeScreen() {
                     opacity: fadeAnim,
                 }}>
                 <Image
-                    source={require('../../assets/img/logoLightSide.png')}
+                    source={theme.images.logo}
                     style={styles.logo}
                 />
             </Animated.View>
-            <Text style={styles.title}>
+            <Text style={[{color: theme.colors.sideColor}, styles.text]}>
                 Welcome to Star Native, the ultimate Star Wars encyclopedia!</Text>
-            <Text style={styles.text}>
+            <Text style={[{color: theme.colors.sideColor}, styles.text]}>
                 This application is your go-to source for all information related to the Star
                 Wars universe. Whether you're a die-hard fan or just starting to explore
                 the world of Star Wars, our app has everything you need to know about
@@ -64,7 +65,6 @@ const styles = StyleSheet.create({
         textShadowColor: 'black',
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 1,
-        color:'#ebb807',
         marginTop:-50,
     },
     text: {
@@ -74,6 +74,5 @@ const styles = StyleSheet.create({
         textShadowColor: 'black',
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 1,
-        color:'#ebb807',
     },
 });
