@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Image, Animated, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, Image, Animated, StyleSheet, ScrollView,Dimensions} from 'react-native';
 import {useTheme} from "../context/theme-context";
 
 export default function HomeScreen() {
@@ -46,6 +46,7 @@ export default function HomeScreen() {
     );
 
 }
+const SIZE = Dimensions.get('window').width * 0.9;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -53,8 +54,8 @@ const styles = StyleSheet.create({
         margin:5,
     },
     logo: {
-        width: 380,
-        height: 380,
+        width: SIZE,
+        height: SIZE,
         alignItems:'center',
         resizeMode: 'contain',
     },

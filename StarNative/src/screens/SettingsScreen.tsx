@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Dimensions, StyleSheet, Switch, View} from 'react-native';
+import {Dimensions, StyleSheet, Switch, StatusBar} from 'react-native';
 import Animated, {
     interpolateColor,
     useAnimatedStyle,
@@ -10,6 +10,7 @@ import Animated, {
 import {useTheme} from "../context/theme-context";
 import {Headline} from "react-native-paper";
 
+
 export default function SettingsScreen() {
     const {toggleThemeType, theme} = useTheme();
     const [isEnabled, setIsEnabled] = useState(false);
@@ -17,10 +18,8 @@ export default function SettingsScreen() {
     const toggleSwitch=() =>{
         if(isEnabled) {
             toggleThemeType()
-            theme.colors.primary='#eb0707'
         } else{
             toggleThemeType()
-            theme.colors.primary='#ebb807'
         }
         setIsEnabled(previousState => !previousState)
     }
@@ -31,8 +30,8 @@ export default function SettingsScreen() {
         <Animated.View style={[styles.circle]}>
             <Switch
                 onValueChange={(toggleSwitch)}
-                trackColor={{false: 'rgba(0,0,0,0.1)', true:'rgba(229,9,9,0.49)'}}
-                thumbColor={isEnabled ? '#eb0707' : '#ebb807'}
+                trackColor={{false: '#d5d4d4', true: theme.colors.sideColor}}
+                thumbColor={isEnabled ? theme.colors.sideColor : theme.colors.sideColor}
                 value={isEnabled}
             />
         </Animated.View>
@@ -40,7 +39,7 @@ export default function SettingsScreen() {
     );
 }
 
-const SIZE = Dimensions.get('window').width * 0.3;
+const SIZE = Dimensions.get('window').width * 0.4;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
