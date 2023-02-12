@@ -101,7 +101,7 @@ async function fetchData() {
   try {
     const response = await axios.get(API_URL);
     const characterIds = response.data.map((character: { id: any; }) => character.id);
-    console.log(characterIds);
+    //console.log(characterIds);
   } catch (error) {
     console.error(error);
   }

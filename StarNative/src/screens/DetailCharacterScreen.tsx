@@ -3,36 +3,39 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
+import { ADD_FAVORITE_CHARACTER, DELETE_FAVORITE_CHARACTER } from '../store/constantes';
 
 const KEY_FAVORITE_CHARACTERS = 'favorite_characters';
 
 export default function DetailCharacterScreen({route}) {
   const character = route.params.character;
-  const favoriteCharacters = useSelector(state => state.favoriteCharacters);
-  const [isLike, setIsLike] = useState(false);
+  const favoriteCharacters = useSelector(state => state.favoritesReducer.favoriteCharacters);
+  const [isLiked, setIsLiked] = useState(false);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   
 
   useEffect(() => {
-    setIsLike(favoriteCharacters.includes(character.name));
-  }, []);
+    const favoriteCharacter = favoriteCharacters.find(
+      (favChar) => favChar.name === character.name
+    );
+    
+    setIsLiked(favoriteCharacter !== undefined);
+  }, [favoriteCharacters, character]);
 
   
   const addToFavorites = () => {
-    if (!favoriteCharacters.includes(character.id)) {
-        setIsLike(true);
-        dispatch({ type: 'ADD_FAVORITE_CHARACTER', payload: character.name });
+    if (!favoriteCharacters.find(favChar => favChar.name === character.name)) {
+        setIsLiked(true);
+        dispatch({ type: ADD_FAVORITE_CHARACTER, payload: character });
       }
-    
   };
 
-  const deleteToFavorites = () => {
-    if (favoriteCharacters.includes(character.name)) {
-        setIsLike(false);
-        dispatch({ type: 'DELETE_FAVORITE_CHARACTER', payload: character.name });
+  const deleteFromFavorites = () => {
+    if (favoriteCharacters.find(favChar => favChar.name === character.name)) {
+        setIsLiked(false);
+        dispatch({ type: DELETE_FAVORITE_CHARACTER, payload: character });
       }
-    
   };
 
   return (
@@ -61,31 +64,33 @@ export default function DetailCharacterScreen({route}) {
         <FlatList
           horizontal={true}
           data={Array.isArray(character.masters) ? character.masters : [character.masters]}
-          renderItem={({ item }) => <Text style={{ marginLeft: 10 }}>{item}</Text>}
-          keyExtractor={item => item}
-        />
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
-        <Text style={{ fontWeight: 'bold' }}>Apprentices:</Text>
-        <FlatList
+          renderItem={({ item }) => <Text
+          style={{ marginLeft: 10 }}>{item}</Text>}
+          keyExtractor={(item, index) => index.toString()}
+          />
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ fontWeight: 'bold' }}>Apprentices:</Text>
+          <FlatList
           horizontal={true}
           data={Array.isArray(character.apprentices) ? character.apprentices : [character.apprentices]}
-          renderItem={({ item }) => <Text style={{ marginLeft: 10 }}>{item}</Text>}
-          keyExtractor={item => item}
-        />
-      </View>
-      <TouchableOpacity onPress={() => Linking.openURL(character.wiki)}>
-        <Text style={{ color: 'blue' }}>Learn more on Wikipedia</Text>
-      </TouchableOpacity>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-        <TouchableOpacity onPress={!isLike ? addToFavorites : deleteToFavorites}>
-          <Icon
-            name={isLike ? 'heart' : 'heart-o'}
-            size={30}
-            color={isLike ? 'red' : 'black'}
+          renderItem={({ item }) => <Text
+          style={{ marginLeft: 10 }}>{item}</Text>}
+          keyExtractor={(item, index) => index.toString()}
           />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-}
+          </View>
+          <TouchableOpacity
+          style={{ marginTop: 20 }}
+          onPress={() => {
+          isLiked ? deleteFromFavorites() : addToFavorites();
+          }}
+          >
+          <Icon
+          name={isLiked ? 'heart' : 'heart-o'}
+          size={30}
+          color={isLiked ? 'red' : 'black'}
+          />
+          </TouchableOpacity>
+          </View>
+          );
+        }

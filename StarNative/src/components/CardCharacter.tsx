@@ -1,15 +1,15 @@
-import {TouchableOpacity, Text, Image, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, Image, StyleSheet, View} from 'react-native';
 import {Headline} from "react-native-paper";
 
 
 
-export default function CardCharacter({ props: CharactersListItemProps, navigation }) {
+export default function CardCharacter({ props: CharactersListItemProps }) {
 
   return (
-    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20 }} onPress={() => navigation.navigate('CharacterDetails', { character: CharactersListItemProps })}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20 }} >
       <Image source={{ uri: CharactersListItemProps.image }} style={styles.images} />
       <Headline style={styles.name}>{CharactersListItemProps.name}</Headline>
-    </TouchableOpacity>
+    </View>
   );
 }
 
