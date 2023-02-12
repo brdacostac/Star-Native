@@ -35,7 +35,8 @@ export default function FavoritesScreen() {
   
   useEffect(() => {
     setLocalFavoriteCharacters(favoriteCharacters);
-  }, []);
+    console.log(localFavoriteCharacters);
+  }, [favoriteCharacters]);
   
   return localFavoriteCharacters.length ? (
     <DisplayListsCharacter  isSearchBar={false} dataCharactersParam={localFavoriteCharacters}/>

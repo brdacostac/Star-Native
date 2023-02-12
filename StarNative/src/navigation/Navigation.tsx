@@ -9,6 +9,7 @@ import CharactersNavigation from './CharactersNavigation';
 
 import {ThemeContextProvider, useTheme} from "../context/theme-context";
 import FavoritesScreen from '../screens/FavoritesScreen';
+import FavoritesNavigation from './FavoritesNavigation';
 
 const images: { [key: string]: any } = {
     iconHome: require('../../assets/img/icons/homeIcon.png'),
@@ -60,7 +61,7 @@ function Navigation() {
                                                    headerShown: false,
                                                    tabBarIcon: ({color}) => <BarIcon name="iconCharacteres" color={color}/>
                                                }}/>
-                    <BottomTabNavigator.Screen name="Favorites" component={FavoritesScreen}
+                    <BottomTabNavigator.Screen name="Favorites" component={FavoritesNavigation}
                                                options={{
                                                    title: 'Favorites',
                                                    headerShown: false,
