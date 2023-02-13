@@ -7,8 +7,9 @@ import { ADD_FAVORITE_CHARACTER, DELETE_FAVORITE_CHARACTER } from '../store/cons
 import { Ionicons } from '@expo/vector-icons';
 import { Animated, Easing } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import {Headline} from "react-native-paper";
+import {ThemeContextProvider, useTheme} from "../context/theme-context";
 
-const KEY_FAVORITE_CHARACTERS = 'favorite_characters';
 
 export default function DetailCharacterScreen({route}) {
   const character = route.params.character;
@@ -17,6 +18,7 @@ export default function DetailCharacterScreen({route}) {
   const [isLiked, setIsLiked] = useState(false);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const {theme} = useTheme();
   
 
   useEffect(() => {
@@ -66,14 +68,15 @@ export default function DetailCharacterScreen({route}) {
     };
 
   return (
+    
           <View style={{   padding: 25 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
+            <View style={styles.contentTop}>
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
-                style={{ position: 'absolute', left: 0 }}>
-                <Ionicons name="ios-arrow-back" size={30} color="#333" />
+                style={styles.iconBack}>
+                <Ionicons name="ios-arrow-back" size={30} style={{color: theme.colors.sideColor}} />
               </TouchableOpacity> 
-              <Text style={{ fontWeight: 'bold', fontSize: 30, textAlign: 'center' }}>{character.name}</Text>
+              <Headline style={styles.name}>{character.name}</Headline>
             </View>
 
             <ScrollView>
@@ -84,43 +87,43 @@ export default function DetailCharacterScreen({route}) {
             >
               <Animated.Image
                 source={{ uri: character.image }}
-                style={{
-                  width: 200,
-                  height: 200,
-                  borderRadius: 50,
-                  overflow: 'hidden',
-                  alignSelf: 'center',
-                  margin: 20,
-                  transform: [{ scale: scaleValue }]
-                }}
+                style={styles.imageCharacter}
               />
             </TouchableWithoutFeedback>
-            <View style={{ flexDirection: 'row', paddingBottom: 7, paddingTop: 20 }}>
-              <Text style={styles.label}>GENDER</Text>
-              <Text style={styles.value} >{formatWord(character.gender)}</Text>
-            </View>
-            <View style={{ flexDirection: 'row', paddingBottom: 7 }}>
-              <Text style={styles.label}>HOMEWORLD</Text>
-              <Text style={styles.value} >{character.homeworld ? formatWord(character.homeworld) : "Aucun"}</Text>
-            </View>
-            <View style={{ flexDirection: 'row', paddingBottom: 7 }}>
-              <Text style={styles.label}>HEIGHT</Text>
-              <Text style={styles.value} >{character.height ? character.height + " meters" : "Inconnue"}</Text>
-            </View>
-            <View style={{ flexDirection: 'row' , paddingBottom: 7 }}>
-              <Text style={styles.label}>MASS</Text>
-              <Text style={styles.value} >{character.mass? character.mass + " kilograms" : "Inconnue"}</Text>
-            </View>
-            <View style={{ flexDirection: 'row', paddingBottom: 7 }}>
-              <Text style={styles.label}>SPECIES</Text>
-              <Text style={styles.value} >{formatWord(character.species)}</Text>
-            </View>
-            <TouchableOpacity onPress={() => Linking.openURL(character.wiki)}>
-              <Text style={{ color: 'blue' }}>Learn more on Wikipedia</Text>
+            <TouchableOpacity
+              style={styles.iconLike}
+              onPress={() => {
+              isLiked ? deleteFromFavorites() : addToFavorites();
+              }}>
+              <Icon
+                name={isLiked ? 'heart' : 'heart-o'}
+                size={30}
+                color={isLiked ? 'red' : 'black'}
+              />
             </TouchableOpacity>
+            <View style={{ flexDirection: 'row', paddingBottom: 7, paddingTop: 20 }}>
+              <Headline style={styles.label}>GENDER</Headline>
+              <Headline style={styles.value} >{formatWord(character.gender)}</Headline>
+            </View>
+            <View style={styles.contentDescription}>
+              <Headline style={styles.label}>HOMEWORLD</Headline>
+              <Headline style={styles.value} >{character.homeworld ? formatWord(character.homeworld) : "Aucun"}</Headline>
+            </View>
+            <View style={styles.contentDescription}>
+              <Headline style={styles.label}>HEIGHT</Headline>
+              <Headline style={styles.value} >{character.height ? character.height + " meters" : "Inconnue"}</Headline>
+            </View>
+            <View style={styles.contentDescription}>
+              <Headline style={styles.label}>MASS</Headline>
+              <Headline style={styles.value} >{character.mass? character.mass + " kilograms" : "Inconnue"}</Headline>
+            </View>
+            <View style={styles.contentDescription}>
+              <Headline style={styles.label}>SPECIES</Headline>
+              <Headline style={styles.value} >{formatWord(character.species)}</Headline>
+            </View>
             {character.masters && (dataCharactersState.filter(favChar => character.masters.includes(favChar.name)).length > 0 || dataCharactersState.find(favChar => favChar.name === character.masters)) &&
-              <View style={{ flexDirection: 'column', alignItems: 'flex-start', marginBottom: 20 }}>
-                <Text style={{ fontWeight: 'bold' }}>Masters:</Text>
+              <View style={styles.contentList}>
+                <Headline style={styles.label}>Masters:</Headline>
                 <FlatList
                   horizontal={true}
                   data={
@@ -132,14 +135,14 @@ export default function DetailCharacterScreen({route}) {
                       <TouchableOpacity style={{ marginLeft: 10 }}
                                         onPress={() => navigation.navigate('CharacterDetails', { character: item })}>
                         {/* <Text>{item.name}</Text> */}
-                        <Image source={{ uri: item.image }} style={{ width: 65, height: 65, borderRadius: 50 , borderWidth: 1, borderColor: '#333' }} />
+                        <Image source={{ uri: item.image }} style={styles.imageCharacters} />
                       </TouchableOpacity>)}
                     keyExtractor={(item, index) => index.toString()} />
               </View>}
             
             {character.apprentices  && (dataCharactersState.filter(favChar => character.apprentices.includes(favChar.name)).length > 0 || dataCharactersState.find(favChar => favChar.name === character.apprentices)) &&
-              <View style={{ flexDirection: 'column', alignItems: 'flex-start'}}> 
-                  <Text style={{ fontWeight: 'bold' }}>Apprentis:</Text>
+              <View style={styles.contentList}> 
+                  <Headline style={styles.label}>Apprentis:</Headline>
                   <FlatList
                     horizontal={true}
                     data={Array.isArray(character.apprentices) ?
@@ -149,21 +152,14 @@ export default function DetailCharacterScreen({route}) {
                       <TouchableOpacity style={{ marginLeft: 10 }}
                                         onPress={() => navigation.navigate('CharacterDetails', { character: item })}>
                         {/* <Text>{item.name}</Text> */}
-                        <Image source={{ uri: item.image }} style={{ width: 65, height: 65, borderRadius: 50 }} />
+                        <Image source={{ uri: item.image }} style={styles.imageCharacters} />
                       </TouchableOpacity>)}
                     keyExtractor={(item, index) => index.toString()} />
               </View>}
-            <TouchableOpacity
-              style={{ marginTop: 20 }}
-              onPress={() => {
-              isLiked ? deleteFromFavorites() : addToFavorites();
-              }}>
-              <Icon
-                name={isLiked ? 'heart' : 'heart-o'}
-                size={30}
-                color={isLiked ? 'red' : 'black'}
-              />
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => Linking.openURL(character.wiki)}>
+                <Headline style={styles.wiki}>Learn more on Wikipedia</Headline>
+              </TouchableOpacity>
+        
             </ScrollView>
           </View>
           );
@@ -175,9 +171,58 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 20,
     width: '35%',
+    fontWeight: 'bold',
   },
   value: {
     marginLeft: '20%',
     fontSize: 20,
   },
+  name: { 
+    fontWeight: 'bold', 
+    fontSize: 30, 
+    textAlign: 'center', 
+  },
+  contentTop: { 
+    flexDirection: 'row', 
+    justifyContent: 'center',
+  },
+  iconBack: { 
+    position: 'absolute', 
+    left: 0,
+  },
+  imageCharacter: {
+    width: 200,
+    height: 200,
+    borderRadius: 50,
+    overflow: 'hidden',
+    alignSelf: 'center',
+    margin: 20,
+    // transform: [{ scale: scaleValue }]
+  },
+  iconLike: { 
+    marginTop: 2, 
+    alignSelf: 'center'
+  },
+  contentDescription: { 
+    flexDirection: 'row', 
+    paddingBottom: 7 
+  },
+  contentList: { 
+    flexDirection: 'column', 
+    alignItems: 'flex-start', 
+    marginBottom: 20 
+  },
+  imageCharacters: { 
+    width: 65, 
+    height: 65, 
+    borderRadius: 50, 
+    borderWidth: 2, 
+    borderColor: '#333' 
+  },
+  wiki: {
+    marginBottom: 10,
+    fontSize: 20,
+    fontWeight: 'bold', 
+    paddingBottom: 10
+  }
 });
