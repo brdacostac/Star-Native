@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Dimensions, StyleSheet, Switch, StatusBar} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {Dimensions, StyleSheet, Switch, StatusBar, TouchableOpacity, Text} from 'react-native';
 import Animated, {
     interpolateColor,
     useAnimatedStyle,
@@ -10,12 +10,17 @@ import Animated, {
 
 import {useTheme} from "../context/theme-context";
 import {Headline} from "react-native-paper";
+import { LanguageContext } from '../context/language-context';
+import fr from '../globalization/fr';
+import en from '../globalization/en';
 
 
 export default function SettingsScreen() {
     const {toggleThemeType, theme} = useTheme();
     const [isEnabled, setIsEnabled] = useState(false);
-
+    const { language, setLanguage } = useContext(LanguageContext);
+    const translations = language === 'en' ? en : fr;
+    
     const toggleSwitch=() =>{
         if(isEnabled) {
             toggleThemeType()
@@ -36,6 +41,10 @@ export default function SettingsScreen() {
                 value={isEnabled}
             />
         </Animated.View>
+        <TouchableOpacity onPress={() => setLanguage(language === 'en' ? 'fr' : 'en')}>
+            <Text>eee</Text>
+            <Text>{translations.language}</Text>
+        </TouchableOpacity>
     </Animated.View>
     );
 }

@@ -6,6 +6,7 @@ import { loadFavorites, loadFavoritesSuccess } from './src/actions/actionsFavori
 import { useEffect, useState } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, Text } from 'react-native';
 import { loadCharacters, loadCharactersSuccess } from './src/actions/actionsCharacters';
+import { LanguageProvider } from './src/context/language-context';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -45,9 +46,11 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.mainSafeArea}>
-          <Navigation></Navigation>
-      </SafeAreaView>
+       <LanguageProvider>
+        <SafeAreaView style={styles.mainSafeArea}>
+            <Navigation></Navigation>
+        </SafeAreaView>
+      </LanguageProvider>
     </Provider>
   );
 }
