@@ -3,8 +3,6 @@ import {
     Dimensions,
     StyleSheet,
     Switch,
-    TouchableOpacity,
-    Text,
     View, Image,
 } from 'react-native';
 import Animated, {
@@ -79,18 +77,18 @@ export default function SettingsScreen() {
                 }}
                             onSelect={(selectedItem, index) => {
                                 setLanguage(selectedItem.language);
-            }}
-                            buttonStyle={styles.dropdown3BtnStyle}
+                 }}
+                            buttonStyle={[styles.dropdown3BtnStyle, {backgroundColor: theme.colors.background}, {borderColor: theme.colors.text}]}
                             renderCustomizedButtonChild={(selectedItem, index) => {
                                 return (
-                                    <View style={styles.dropdown3BtnChildStyle}>
+                                    <View style={[styles.dropdown3BtnChildStyle]}>
                                         {selectedItem ? (
                                             <Image source={selectedItem.image} style={styles.dropdown3BtnImage} />
                                         ) : (
-                                            <Ionicons name="md-earth-sharp" size={32} />
+                                            <Ionicons name="md-earth-sharp" size={25} />
                                         )}
-                                        <Text style={styles.dropdown3BtnTxt}>{selectedItem ? selectedItem.title : 'Select Language'}</Text>
-                                        <FontAwesome name="chevron-down" size={18} />
+                                        <Headline style={styles.dropdown3BtnTxt}>{selectedItem ? selectedItem.title : 'Select Language'}</Headline>
+                                        <FontAwesome name="chevron-down" size={15}/>
                                     </View>
                                 );
                             }}
@@ -101,7 +99,7 @@ export default function SettingsScreen() {
                                 return (
                                     <View style={styles.dropdown3RowChildStyle}>
                                         <Image source={item.image} style={styles.dropdownRowImage} />
-                                        <Text style={styles.dropdown3RowTxt}>{item.title}</Text>
+                                        <Headline style={styles.dropdown3RowTxt}>{item.title}</Headline>
                                     </View>
                                 );
                             }}
@@ -133,10 +131,16 @@ const styles = StyleSheet.create({
         elevation: 10,
     },
     dropdown1SelectedRowStyle: {backgroundColor: 'rgba(0,0,0,0.1)'},
-    dropdownRowImage: {width: 45, height: 45, resizeMode: 'cover'},
+    dropdownRowImage: {
+        width: 45,
+        height: 45,
+        resizeMode: 'cover'
+    },
     dropdown3BtnStyle: {
-        width: '80%',
-        height: 50,
+        backgroundColor:'white',
+        width: '50%',
+        height: 35,
+        marginTop: 60,
         paddingHorizontal: 0,
         borderWidth: 1,
         borderRadius: 8,
@@ -147,14 +151,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 18,
+        paddingHorizontal: 10,
     },
-    dropdown3BtnImage: {width: 45, height: 45, resizeMode: 'cover'},
+    dropdown3BtnImage: {
+        width: 25,
+        height: 25,
+        resizeMode: 'cover'
+    },
     dropdown3BtnTxt: {
-        color: '#444',
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 24,
+        fontSize: 18,
         marginHorizontal: 12,
     },
     dropdown3DropdownStyle: {backgroundColor: 'slategray'},
