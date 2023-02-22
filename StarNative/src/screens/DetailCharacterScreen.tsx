@@ -218,8 +218,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     overflow: 'hidden',
     alignSelf: 'center',
-    margin: 20,
-    // transform: [{ scale: scaleValue }]
+    margin: 20
   },
   iconLike: { 
     marginTop: 2, 
