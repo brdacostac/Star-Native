@@ -1,6 +1,6 @@
 export default {
     gender : 'GENDER',
-    homeworld: 'HOMEWORLD',
+    homeworld: 'HOME WORLD',
     height: 'HEIGHT',
     mass: 'MASS',
     species: 'SPECIES',
@@ -17,4 +17,5 @@ export default {
     unknown: 'Unknown',
     language: 'Change your language',
     emptyFavorites: 'Empty Favorites',
+    darkside: 'Dark Side',
   };
