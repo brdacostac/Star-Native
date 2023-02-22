@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, Text } from 'react-native';
 import DisplayListsCharacter from '../components/DisplayListsCharacter';
+import {Headline} from "react-native-paper";
+import en from "../globalization/en";
+import fr from "../globalization/fr";
+import {LanguageContext} from "../context/language-context";
 
 
 // interface Character {
@@ -30,19 +34,20 @@ import DisplayListsCharacter from '../components/DisplayListsCharacter';
 
 export default function FavoritesScreen() {
   const [localFavoriteCharacters, setLocalFavoriteCharacters] = useState([]);
+  const { language, setLanguage } = useContext(LanguageContext);
+  const translations = language === 'en' ? en : fr;
 
   const favoriteCharacters = useSelector(state => state.favoritesReducer.favoriteCharacters);
   
   useEffect(() => {
     setLocalFavoriteCharacters(favoriteCharacters);
-    console.log(localFavoriteCharacters);
   }, [favoriteCharacters]);
   
   return localFavoriteCharacters.length ? (
     <DisplayListsCharacter  isSearchBar={false} dataCharactersParam={localFavoriteCharacters}/>
   ) : (
     <View>
-      <Text>Problème avec les données</Text>
+      <Headline>{translations.emptyFavorites}</Headline>
     </View>
   );
   }

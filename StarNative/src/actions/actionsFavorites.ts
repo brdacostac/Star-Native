@@ -8,6 +8,7 @@ export const loadFavoritesSuccess = (favorites: string[]) => ({
   
 export const loadFavorites = async () => {
     try {
+        //await AsyncStorage.clear();
         const favorites = await AsyncStorage.getItem('favorites');
         if (favorites) {
             return JSON.parse(favorites);
@@ -19,11 +20,9 @@ export const loadFavorites = async () => {
 };
 
 export const saveFavorites = async (favoriteCharacters) => {
-    console.log("test10")
     try {
       await AsyncStorage.setItem('favorites', JSON.stringify(favoriteCharacters));
     } catch (error) {
-        console.log("test11")
       console.error(error);
     }
 };

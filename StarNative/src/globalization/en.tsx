@@ -16,4 +16,5 @@ export default {
     meters: 'meters',
     unknown: 'Unknown',
     language: 'Change your language',
+    emptyFavorites: 'Empty Favorites',
   };

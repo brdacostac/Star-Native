@@ -21,7 +21,6 @@ export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}
             console.log(isSearchBar);
             setDataCharacters(dataCharactersParam);
           }, [dataCharactersParam]);
-   
 
           const filteredData = dataCharacters.length ? 
                                 dataCharacters.filter((item: { name: string; }) => item.name.toLowerCase().includes(searchTerm.toLowerCase())) : 

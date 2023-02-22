@@ -15,5 +15,6 @@ export default {
     kilograms: 'kilogrammes',
     meters: 'mètres',
     unknown: 'Inconnue',
-    language: 'Change le langage'
-  };
+    language: 'Change le langage',
+    emptyFavorites: 'Favorites Vide',
+};
