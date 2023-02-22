@@ -1,5 +1,19 @@
 export default {
     gender : 'GENDER',
     homeworld: 'HOMEWORLD',
-    language: 'Change your language'
+    height: 'HEIGHT',
+    mass: 'MASS',
+    species: 'SPECIES',
+    masters: 'MASTERS',
+    apprentices: 'APPRENTICES',
+    wiki: 'Learn more on Wiki',
+    searchBar: 'Search for a character',
+    home: 'Home',
+    characters: 'Characters',
+    favorites: 'Favorites',
+    settings: 'Settings',
+    kilograms: 'kilograms',
+    meters: 'meters',
+    unknown: 'Unknown',
+    language: 'Change your language',
   };

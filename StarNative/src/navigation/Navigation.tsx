@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from "../screens/HomeScreen";
@@ -10,6 +10,9 @@ import CharactersNavigation from './CharactersNavigation';
 import {ThemeContextProvider, useTheme} from "../context/theme-context";
 import FavoritesScreen from '../screens/FavoritesScreen';
 import FavoritesNavigation from './FavoritesNavigation';
+import { LanguageContext } from '../context/language-context';
+import en from '../globalization/en';
+import fr from '../globalization/fr';
 
 interface Props {
     name: string;
@@ -55,6 +58,8 @@ const images: { [key: string]: any } = {
 const BottomTabNavigator = createBottomTabNavigator();
 
 function Navigation() {
+    const { language, setLanguage } = useContext(LanguageContext);
+    const translations = language === 'en' ? en : fr;
     const {theme} = useTheme();
     return (
         <ThemeContextProvider>

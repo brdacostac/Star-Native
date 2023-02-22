@@ -1,8 +1,11 @@
 import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import CardCharacter from './../components/CardCharacter';
 import axios from 'axios';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { LanguageContext } from '../context/language-context';
+import en from '../globalization/en';
+import fr from '../globalization/fr';
 
 
 export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}) {
@@ -10,9 +13,12 @@ export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}
           const [dataCharacters, setDataCharacters] = useState([]);
           const textInputRef = useRef(null);
           const navigation = useNavigation();
+          const { language, setLanguage } = useContext(LanguageContext);
+          const translations = language === 'en' ? en : fr;
 
           useEffect(() => {
             //console.log(dataCharactersParam)
+            console.log(isSearchBar);
             setDataCharacters(dataCharactersParam);
           }, [dataCharactersParam]);
    
@@ -26,7 +32,7 @@ export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}
                 {isSearchBar &&
                 (<View style={[styles.searchBar]}>
                   <TextInput style={styles.textInput}
-                    placeholder="Rechercher un personnage"
+                    placeholder={translations.searchBar}
                     value={searchTerm}
                     onChangeText={text => setSearchTerm(text)}
                     ref={textInputRef}
@@ -47,7 +53,7 @@ export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}
                   data={filteredData} 
                   renderItem={({ item }) => (
                     <TouchableOpacity 
-                      onPress={() => navigation.navigate('CharacterDetails', { character: item })}
+                      onPress={() => navigation.navigate('CharacterDetails', { character: item, isFavorite : isSearchBar })}
                     >
                       <CardCharacter props={item} />
                     </TouchableOpacity>

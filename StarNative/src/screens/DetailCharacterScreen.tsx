@@ -1,6 +1,6 @@
 import { View, Text, FlatList, Image, TouchableOpacity, Linking, Button, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_FAVORITE_CHARACTER, DELETE_FAVORITE_CHARACTER } from '../store/constantes';
@@ -9,23 +9,30 @@ import { Animated, Easing } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {Headline} from "react-native-paper";
 import {ThemeContextProvider, useTheme} from "../context/theme-context";
-
+import { LanguageContext } from '../context/language-context';
+import fr from '../globalization/fr';
+import en from '../globalization/en';
+import Like from "./../../assets/img/unlike.png";
+import Unlike from '../../assets/img/like.png';
+import Bin from '../../assets/img/poubelle.png';
 
 export default function DetailCharacterScreen({route}) {
   const character = route.params.character;
+  const isFavorite = route.params.isFavorite;
   const favoriteCharacters = useSelector(state => state.favoritesReducer.favoriteCharacters);
   const dataCharactersState = useSelector((state) => state.charactersReducer.characters);
   const [isLiked, setIsLiked] = useState(false);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {theme} = useTheme();
+  const { language, setLanguage } = useContext(LanguageContext);
+  const translations = language === 'en' ? en : fr;
   
 
   useEffect(() => {
     const favoriteCharacter = favoriteCharacters.find(
       (favChar) => favChar.name === character.name
     );
-
     setIsLiked(favoriteCharacter !== undefined);
   }, [favoriteCharacters, character]);
 
@@ -70,13 +77,22 @@ export default function DetailCharacterScreen({route}) {
   return (
     
           <View style={{   padding: 25 }}>
-            <View style={styles.contentTop}>
+            <View style={isFavorite ? styles.contentTop : styles.contentTopF }>
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
-                style={styles.iconBack}>
+                style={isFavorite && styles.iconBack }>
                 <Ionicons name="ios-arrow-back" size={30} style={{color: theme.colors.sideColor}} />
               </TouchableOpacity> 
               <Headline style={styles.name}>{character.name}</Headline>
+              {! isFavorite &&
+                <TouchableOpacity
+                  style={styles.iconBin}
+                  onPress={() => {
+                  deleteFromFavorites(), navigation.goBack() ;
+                  }}>
+                  <Image source={Bin} style={styles.likeImage} />
+                </TouchableOpacity>
+              }
             </View>
 
             <ScrollView>
@@ -90,40 +106,42 @@ export default function DetailCharacterScreen({route}) {
                 style={styles.imageCharacter}
               />
             </TouchableWithoutFeedback>
-            <TouchableOpacity
-              style={styles.iconLike}
-              onPress={() => {
-              isLiked ? deleteFromFavorites() : addToFavorites();
-              }}>
-              <Icon
-                name={isLiked ? 'heart' : 'heart-o'}
-                size={30}
-                color={isLiked ? 'red' : 'black'}
-              />
-            </TouchableOpacity>
+            {isFavorite &&
+              <TouchableOpacity
+                style={styles.iconLike}
+                onPress={() => {
+                isLiked ? deleteFromFavorites() : addToFavorites();
+                }}>
+                {isLiked ? (
+                  <Image source={Like} style={styles.likeImage} />
+                ) : (
+                  <Image source={Unlike} style={styles.unlikeImage} />
+                )}
+              </TouchableOpacity>
+            }
             <View style={{ flexDirection: 'row', paddingBottom: 7, paddingTop: 20 }}>
-              <Headline style={styles.label}>GENDER</Headline>
+              <Headline style={styles.label}>{translations.gender}</Headline>
               <Headline style={styles.value} >{formatWord(character.gender)}</Headline>
             </View>
             <View style={styles.contentDescription}>
-              <Headline style={styles.label}>HOMEWORLD</Headline>
-              <Headline style={styles.value} >{character.homeworld ? formatWord(character.homeworld) : "Aucun"}</Headline>
+              <Headline style={styles.label}>{translations.homeworld}</Headline>
+              <Headline style={styles.value} >{character.homeworld ? formatWord(character.homeworld) : translations.unknown}</Headline>
             </View>
             <View style={styles.contentDescription}>
-              <Headline style={styles.label}>HEIGHT</Headline>
-              <Headline style={styles.value} >{character.height ? character.height + " meters" : "Inconnue"}</Headline>
+              <Headline style={styles.label}>{translations.height}</Headline>
+              <Headline style={styles.value} >{character.height ? character.height + " " + translations.meters : translations.unknown}</Headline>
             </View>
             <View style={styles.contentDescription}>
-              <Headline style={styles.label}>MASS</Headline>
-              <Headline style={styles.value} >{character.mass? character.mass + " kilograms" : "Inconnue"}</Headline>
+              <Headline style={styles.label}>{translations.mass}</Headline>
+              <Headline style={styles.value} >{character.mass? character.mass + " " + translations.kilograms : translations.unknown}</Headline>
             </View>
             <View style={styles.contentDescription}>
-              <Headline style={styles.label}>SPECIES</Headline>
+              <Headline style={styles.label}>{translations.species}</Headline>
               <Headline style={styles.value} >{formatWord(character.species)}</Headline>
             </View>
             {character.masters && (dataCharactersState.filter(favChar => character.masters.includes(favChar.name)).length > 0 || dataCharactersState.find(favChar => favChar.name === character.masters)) &&
               <View style={styles.contentList}>
-                <Headline style={styles.label}>Masters:</Headline>
+                <Headline style={styles.label}>{translations.masters}</Headline>
                 <FlatList
                   horizontal={true}
                   data={
@@ -142,7 +160,7 @@ export default function DetailCharacterScreen({route}) {
             
             {character.apprentices  && (dataCharactersState.filter(favChar => character.apprentices.includes(favChar.name)).length > 0 || dataCharactersState.find(favChar => favChar.name === character.apprentices)) &&
               <View style={styles.contentList}> 
-                  <Headline style={styles.label}>Apprentis:</Headline>
+                  <Headline style={styles.label}>{translations.apprentices}</Headline>
                   <FlatList
                     horizontal={true}
                     data={Array.isArray(character.apprentices) ?
@@ -157,7 +175,7 @@ export default function DetailCharacterScreen({route}) {
                     keyExtractor={(item, index) => index.toString()} />
               </View>}
               <TouchableOpacity onPress={() => Linking.openURL(character.wiki)}>
-                <Headline style={styles.wiki}>Learn more on Wikipedia</Headline>
+                <Headline style={styles.wiki}>{translations.wiki}</Headline>
               </TouchableOpacity>
         
             </ScrollView>
@@ -170,11 +188,11 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 10,
     fontSize: 20,
-    width: '35%',
+    width: '45%',
     fontWeight: 'bold',
   },
   value: {
-    marginLeft: '20%',
+    marginLeft: '10%',
     fontSize: 20,
   },
   name: { 
@@ -185,6 +203,10 @@ const styles = StyleSheet.create({
   contentTop: { 
     flexDirection: 'row', 
     justifyContent: 'center',
+  },
+  contentTopF: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
   },
   iconBack: { 
     position: 'absolute', 
@@ -224,5 +246,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold', 
     paddingBottom: 10
-  }
+  },
+  likeImage: {
+    width: 30,
+    height: 30,
+    tintColor: 'red',
+  },
+  unlikeImage: {
+    width: 30,
+    height: 30,
+    tintColor: 'black',
+  },
+  iconBin: { 
+    marginTop: 2, 
+    right: 0,
+  },
 });
