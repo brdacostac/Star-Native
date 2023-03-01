@@ -1,16 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Dimensions,
     StyleSheet,
     Switch,
     View, Image,
 } from 'react-native';
-import Animated, {
-Easing,
-useAnimatedStyle,
-withTiming,
-} from 'react-native-reanimated';
 
+
+import { Audio } from 'expo-av';
 import { useTheme } from '../context/theme-context';
 import { Headline } from 'react-native-paper';
 import { LanguageContext } from '../context/language-context';
@@ -21,41 +18,37 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function SettingsScreen() {
-    const { toggleThemeType, theme } = useTheme();
+    const {toggleThemeType, theme} = useTheme();
     const [isEnabled, setIsEnabled] = useState(false);
-    const { language, setLanguage } = useContext(LanguageContext);
+    const {language, setLanguage} = useContext(LanguageContext);
     const translations = language === 'en' ? en : fr;
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState('Français');
+
     const languages = [
-        {title: 'English', image: require('../../assets/img/usa.png'), language:'en'},
-        {title: 'French', image: require('../../assets/img/france.png'), language:'fr'},];
-    const rotateValue = new Animated.Value(0);
+        {title: 'English', image: require('../../assets/img/usa.png'), language: 'en'},
+        {title: 'French', image: require('../../assets/img/france.png'), language: 'fr'},];
 
-    const toggleOpen = () => {
-        setIsOpen(!isOpen);
-        Animated.timing(rotateValue, {
-          toValue: isOpen ? 0 : 1,
-          duration: 500,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        }).start();
-      };
-    
-      const rotateStyle = useAnimatedStyle(() => {
-        const rotate = withTiming(isOpen ? 1 : 0, { duration: 500, easing: Easing.linear });
-        return {
-          transform: [
-            {
-              rotate: `${rotate * 180}deg`,
-            },
-          ],
-        };
-      });
+    const [sound, setSound] = useState(null);
 
-    const toggleSwitch = () => {
+    const source = isEnabled
+        ? require('../../assets/musics/LightMode.mp3')
+        : require('../../assets/musics/DarkMode.mp3');
+
+    useEffect(() => {
+        async function loadSound() {
+            const soundObject = new Audio.Sound();
+            await soundObject.loadAsync(source);
+            setSound(soundObject);
+        }
+        loadSound();
+    }, [source]);
+
+
+    const toggleSwitch = async() => {
         toggleThemeType();
         setIsEnabled(!isEnabled);
+        if (sound) {
+            await sound.playAsync();
+        }
     };
 
     return (
@@ -63,31 +56,32 @@ export default function SettingsScreen() {
             <Headline style={styles.text}>{translations.darkside}</Headline>
             <View style={styles.circle}>
                 <Switch
-                onValueChange={toggleSwitch}
-                trackColor={{ false: '#d5d4d4', true: theme.colors.sideColor }}
-                thumbColor={isEnabled ? theme.colors.sideColor : theme.colors.sideColor}
-                value={isEnabled}
+                    onValueChange={toggleSwitch}
+                    trackColor={{false: '#d5d4d4', true: theme.colors.sideColor}}
+                    thumbColor={isEnabled ? theme.colors.sideColor : theme.colors.sideColor}
+                    value={isEnabled}
                 />
             </View>
             <SelectDropdown data={languages}
-                defaultValueByIndex={0}
-                defaultValue={{
-                title: 'English',
-                image: require('../../assets/img/usa.png'),
-                }}
+                            defaultValueByIndex={0}
+                            defaultValue={{
+                                title: 'English',
+                                image: require('../../assets/img/usa.png'),
+                            }}
                             onSelect={(selectedItem, index) => {
                                 setLanguage(selectedItem.language);
-                 }}
+                            }}
                             buttonStyle={[styles.dropdown3BtnStyle, {backgroundColor: theme.colors.background}, {borderColor: theme.colors.text}]}
                             renderCustomizedButtonChild={(selectedItem, index) => {
                                 return (
                                     <View style={[styles.dropdown3BtnChildStyle]}>
                                         {selectedItem ? (
-                                            <Image source={selectedItem.image} style={styles.dropdown3BtnImage} />
+                                            <Image source={selectedItem.image} style={styles.dropdown3BtnImage}/>
                                         ) : (
-                                            <Ionicons name="md-earth-sharp" size={25} />
+                                            <Ionicons name="md-earth-sharp" size={25}/>
                                         )}
-                                        <Headline style={styles.dropdown3BtnTxt}>{selectedItem ? selectedItem.title : 'Select Language'}</Headline>
+                                        <Headline
+                                            style={styles.dropdown3BtnTxt}>{selectedItem ? selectedItem.title : 'Select Language'}</Headline>
                                         <FontAwesome name="chevron-down" size={15}/>
                                     </View>
                                 );
@@ -98,7 +92,7 @@ export default function SettingsScreen() {
                             renderCustomizedRowChild={(item, index) => {
                                 return (
                                     <View style={styles.dropdown3RowChildStyle}>
-                                        <Image source={item.image} style={styles.dropdownRowImage} />
+                                        <Image source={item.image} style={styles.dropdownRowImage}/>
                                         <Headline style={styles.dropdown3RowTxt}>{item.title}</Headline>
                                     </View>
                                 );
