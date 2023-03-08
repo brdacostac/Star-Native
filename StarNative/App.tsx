@@ -3,14 +3,18 @@ import Navigation from './src/navigation/Navigation';
 import store from './src/store/index';
 import { Provider, useDispatch } from 'react-redux';
 import { loadFavorites, loadFavoritesSuccess } from './src/actions/actionsFavorites';
-import { useEffect, useState } from 'react';
-import { SafeAreaView, StatusBar, StyleSheet, Text } from 'react-native';
+import {useContext, useEffect, useState} from 'react';
+import {SafeAreaView, StatusBar, StyleSheet, Text, useColorScheme} from 'react-native';
 import { loadCharacters, loadCharactersSuccess } from './src/actions/actionsCharacters';
 import { LanguageProvider } from './src/context/language-context';
-import type {StatusBarStyle} from 'react-native';
+
+
+import { ThemeContext } from './src/context/theme-context';
+
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const { themeType } = useContext(ThemeContext);
   
 
   useEffect(() => {
@@ -36,7 +40,9 @@ export default function App() {
       //   console.error(error);
       // }
     };
-    
+
+
+
     loadDataCharacter();
     loadData();
   }, []);
@@ -49,6 +55,7 @@ export default function App() {
     <Provider store={store}>
        <LanguageProvider>
         <SafeAreaView style={styles.mainSafeArea}>
+          <StatusBar barStyle={themeType ? 'light-content' : "dark-content" } />
             <Navigation></Navigation>
         </SafeAreaView>
       </LanguageProvider>
@@ -59,6 +66,6 @@ export default function App() {
 const styles = StyleSheet.create({
   mainSafeArea: {
     flex: 1,
-    marginTop: StatusBar.currentHeight
+    //marginTop: StatusBar.currentHeight
   }
 });
