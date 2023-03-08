@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, Text } from 'react-native';
 import { loadCharacters, loadCharactersSuccess } from './src/actions/actionsCharacters';
 import { LanguageProvider } from './src/context/language-context';
+import type {StatusBarStyle} from 'react-native';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
