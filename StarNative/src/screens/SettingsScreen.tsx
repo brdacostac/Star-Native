@@ -3,7 +3,7 @@
     Dimensions,
     StyleSheet,
     Switch,
-    View, Image, TouchableOpacity,
+    View, Image, TouchableOpacity, StatusBar,
 } from 'react-native';
 
 
@@ -18,7 +18,7 @@
     import Ionicons from 'react-native-vector-icons/Ionicons';
 
     export default function SettingsScreen() {
-        const {toggleThemeType, theme} = useTheme();
+        const {toggleThemeType, theme, isDarkTheme} = useTheme();
         const [isEnabled, setIsEnabled] = useState(false);
         const [isMuted, setIsMuted] = useState(false);
         const {language, setLanguage} = useContext(LanguageContext);
@@ -123,6 +123,7 @@
                             size={40}
                             color={theme.colors.text}/>
                     </TouchableOpacity>
+                    <StatusBar barStyle={isDarkTheme ? 'light-content' : "dark-content"} backgroundColor={isDarkTheme ? "black" : 'white' } />
                 </View>
             </View>
 

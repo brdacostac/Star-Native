@@ -9,15 +9,19 @@ import { loadCharacters, loadCharactersSuccess } from './src/actions/actionsChar
 import { LanguageProvider } from './src/context/language-context';
 
 
-import { ThemeContext } from './src/context/theme-context';
+import {ThemeContext, ThemeContextProvider, useTheme} from './src/context/theme-context';
 
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const { themeType } = useContext(ThemeContext);
-  
+  const {theme, isDarkTheme} = useTheme();
+
+
+
 
   useEffect(() => {
+
     const loadData = async () => {
       try {
         const favorites = await loadFavorites();
@@ -29,9 +33,9 @@ export default function App() {
     };
 
     const loadDataCharacter = () => {
-      console.log("test");
+
       store.dispatch(loadCharacters());
-      console.log("test2");
+
       // try {
       //   const characters = await loadCharacters();
       //   store.dispatch(loadCharactersSuccess(characters));
@@ -42,7 +46,6 @@ export default function App() {
     };
 
 
-
     loadDataCharacter();
     loadData();
   }, []);
@@ -51,11 +54,12 @@ export default function App() {
     return <Text>Loading...</Text>;
   }
 
+
   return (
     <Provider store={store}>
        <LanguageProvider>
         <SafeAreaView style={styles.mainSafeArea}>
-          <StatusBar barStyle={themeType ? 'light-content' : "dark-content" } />
+          <StatusBar barStyle={'dark-content'} backgroundColor={"white"}></StatusBar>
             <Navigation></Navigation>
         </SafeAreaView>
       </LanguageProvider>
