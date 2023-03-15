@@ -17,4 +17,5 @@ export default {
     unknown: 'Inconnue',
     language: 'Change le langage',
     emptyFavorites: 'Favorites Vide',
+    darkside: 'Côté obscur'
 };
