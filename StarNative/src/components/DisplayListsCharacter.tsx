@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { LanguageContext } from '../context/language-context';
 import en from '../globalization/en';
 import fr from '../globalization/fr';
+import { ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 
 
 export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}) {
@@ -17,13 +18,11 @@ export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}
           const translations = language === 'en' ? en : fr;
 
           useEffect(() => {
-            //console.log(dataCharactersParam)
-            console.log(isSearchBar);
             setDataCharacters(dataCharactersParam);
           }, [dataCharactersParam]);
 
-          const filteredData = dataCharacters.length ? 
-                                dataCharacters.filter((item: { name: string; }) => item.name.toLowerCase().includes(searchTerm.toLowerCase())) : 
+          const filteredData = isSearchBar && dataCharacters.length  ? 
+                                dataCharacters.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase())) : 
                                 dataCharacters;
         
           return (
@@ -37,13 +36,13 @@ export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}
                     ref={textInputRef}
                   />
                   {searchTerm.length > 0 && (
-                    <TouchableOpacity onPress={() => {
+                    <TouchableOpacity style={{ fontSize: 20, marginLeft: 10}} onPress={() => {
                       setSearchTerm('');
                       if (textInputRef.current) {
                         textInputRef.current.blur();
                       }
                     }}>
-                      <Text style={{fontSize: 20, marginLeft: 10}}>&times;</Text>
+                      <Text >&times;</Text>
                     </TouchableOpacity>
                   )} 
                   </View>

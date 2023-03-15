@@ -4,7 +4,6 @@ import {Headline} from "react-native-paper";
 
 
 export default function CardCharacter({ props: CharactersListItemProps }) {
-
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20 }} >
       <Image source={{ uri: CharactersListItemProps.image }} style={styles.images} />

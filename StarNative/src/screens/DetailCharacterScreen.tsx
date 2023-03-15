@@ -40,7 +40,7 @@ export default function DetailCharacterScreen({route}) {
   
   const handleImagePressIn = () => {
     Animated.timing(scaleValue, {
-      toValue: 1.3,
+      toValue: 1.2,
       duration: 300,
       useNativeDriver: true
     }).start();
@@ -76,7 +76,7 @@ export default function DetailCharacterScreen({route}) {
 
   return (
     
-          <View style={{   padding: 25 }}>
+          <View  style={{paddingTop: 25}}>
             <View style={isFavorite ? styles.contentTop : styles.contentTopF }>
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
@@ -90,12 +90,12 @@ export default function DetailCharacterScreen({route}) {
                   onPress={() => {
                   deleteFromFavorites(), navigation.goBack() ;
                   }}>
-                  <Image source={Bin} style={styles.likeImage} />
+                  <Image source={Bin}  style={styles.binImage} />
                 </TouchableOpacity>
               }
             </View>
 
-            <ScrollView>
+            <ScrollView style={{ paddingHorizontal: 25}}>
 
             <TouchableWithoutFeedback
               onPressIn={handleImagePressIn}
@@ -103,7 +103,7 @@ export default function DetailCharacterScreen({route}) {
             >
               <Animated.Image
                 source={{ uri: character.image }}
-                style={styles.imageCharacter}
+                style={[styles.imageCharacter, { transform: [{ scale: scaleValue }]}]}
               />
             </TouchableWithoutFeedback>
             {isFavorite &&
@@ -203,10 +203,13 @@ const styles = StyleSheet.create({
   contentTop: { 
     flexDirection: 'row', 
     justifyContent: 'center',
+    paddingHorizontal: 25,
+    
   },
   contentTopF: { 
     flexDirection: 'row', 
     justifyContent: 'space-between',
+    paddingHorizontal: 25
   },
   iconBack: { 
     position: 'absolute', 
@@ -244,11 +247,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 20,
     fontWeight: 'bold', 
-    paddingBottom: 10
+    paddingBottom: 30
   },
   likeImage: {
     width: 30,
     height: 30,
+    tintColor: 'red',
+  },
+  binImage: {
+    width: 25,
+    height: 25,
     tintColor: 'red',
   },
   unlikeImage: {

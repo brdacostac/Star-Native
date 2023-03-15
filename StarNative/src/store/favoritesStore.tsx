@@ -13,7 +13,7 @@ const favoritesReducer = (state = initialState, action) => {
         favoriteCharacters: action.payload
       };
     case ADD_FAVORITE_CHARACTER:
-      saveFavorites([...state.favoriteCharacters, action.payload]);
+      saveFavorites([...state.favoriteCharacters]);
       return {
         ...state,
         favoriteCharacters: [...state.favoriteCharacters, action.payload]
