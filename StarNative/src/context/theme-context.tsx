@@ -24,7 +24,8 @@ const lightTheme = {
     },
     images:{
         logo:require('../../assets/img/logoLightSide.png')
-    }
+    },
+    valeur: false
 };
 
 const darkTheme = {
@@ -37,7 +38,8 @@ const darkTheme = {
     },
     images:{
         logo:require('../../assets/img/logoDarkSide.png')
-    }
+    },
+    valeur: true
 };
 export type Theme = typeof  lightTheme;
 
