@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, Image, Animated, StyleSheet, ScrollView,Dimensions} from 'react-native';
 import {useTheme} from "../context/theme-context";
+import { Image360viewer } from 'image360viewer';
 
 export default function HomeScreen() {
     const [fadeAnim] = useState(new Animated.Value(0));
