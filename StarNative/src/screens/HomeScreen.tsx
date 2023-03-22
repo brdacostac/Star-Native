@@ -15,6 +15,7 @@ export default function HomeScreen() {
         }).start();
     }, []);
 
+
     return (
 
         <ScrollView style={styles.container}>
@@ -75,6 +76,16 @@ export default function HomeScreen() {
           Download Star Native today and start exploring the vast world of Star
           Wars!
         </Text>
+
+
+          <Image360viewer
+              images={[
+                  require('../../assets/VaderImages/Vader-1_0000_Camada-22.png'),
+                  require('../../assets/VaderImages/Vader-1_0002_Camada-20.png'),
+              ]}
+              width={300}
+          />}
+
       </View>
     </ScrollView>
   );
