@@ -40,7 +40,7 @@ export default function DetailCharacterScreen({route}) {
   
   const handleImagePressIn = () => {
     Animated.timing(scaleValue, {
-      toValue: 1.3,
+      toValue: 1.2,
       duration: 300,
       useNativeDriver: true
     }).start();
@@ -76,7 +76,7 @@ export default function DetailCharacterScreen({route}) {
 
   return (
     
-          <View style={{   padding: 25 }}>
+          <View  style={{paddingTop: 25}}>
             <View style={isFavorite ? styles.contentTop : styles.contentTopF }>
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
@@ -90,12 +90,12 @@ export default function DetailCharacterScreen({route}) {
                   onPress={() => {
                   deleteFromFavorites(), navigation.goBack() ;
                   }}>
-                  <Image source={Bin} style={styles.likeImage} />
+                  <Image source={Bin}  style={styles.binImage} />
                 </TouchableOpacity>
               }
             </View>
 
-            <ScrollView>
+            <ScrollView style={{ paddingHorizontal: 25}}>
 
             <TouchableWithoutFeedback
               onPressIn={handleImagePressIn}
@@ -103,7 +103,7 @@ export default function DetailCharacterScreen({route}) {
             >
               <Animated.Image
                 source={{ uri: character.image }}
-                style={styles.imageCharacter}
+                style={[styles.imageCharacter, { transform: [{ scale: scaleValue }]}]}
               />
             </TouchableWithoutFeedback>
             {isFavorite &&
@@ -121,7 +121,7 @@ export default function DetailCharacterScreen({route}) {
             }
             <View style={{ flexDirection: 'row', paddingBottom: 7, paddingTop: 20 }}>
               <Headline style={styles.label}>{translations.gender}</Headline>
-              <Headline style={styles.value} >{formatWord(character.gender)}</Headline>
+              <Headline style={styles.value} >{character.gender ? formatWord(character.gender) : translations.unknown}</Headline>
             </View>
             <View style={styles.contentDescription}>
               <Headline style={styles.label}>{translations.homeworld}</Headline>
@@ -137,26 +137,32 @@ export default function DetailCharacterScreen({route}) {
             </View>
             <View style={styles.contentDescription}>
               <Headline style={styles.label}>{translations.species}</Headline>
-              <Headline style={styles.value} >{formatWord(character.species)}</Headline>
+              <Headline style={styles.value} >{character.species ? formatWord(character.species) : translations.unknown}</Headline>
             </View>
-            {character.masters && (dataCharactersState.filter(favChar => character.masters.includes(favChar.name)).length > 0 || dataCharactersState.find(favChar => favChar.name === character.masters)) &&
+            {character.masters && (dataCharactersState.filter(favChar => character.masters.includes(favChar.name)).length > 0 || dataCharactersState.find(favChar => favChar.name === character.masters)) && (
               <View style={styles.contentList}>
                 <Headline style={styles.label}>{translations.masters}</Headline>
                 <FlatList
                   horizontal={true}
-                  data={
-                    Array.isArray(character.masters) ?
-                      dataCharactersState.filter(favChar => character.masters.includes(favChar.name)) :
-                        [dataCharactersState.find(favChar => favChar.name === character.masters)] 
+                  data={Array.isArray(character.masters) ?
+                    dataCharactersState.filter(favChar => character.masters.includes(favChar.name)) :
+                    [dataCharactersState.find(favChar => favChar.name === character.masters)]
                   }
-                    renderItem={({ item }) => (
-                      <TouchableOpacity style={{ marginLeft: 10 }}
-                                        onPress={() => navigation.navigate('CharacterDetails', { character: item })}>
-                        {/* <Text>{item.name}</Text> */}
+                  renderItem={({ item }) => (
+                    ! isFavorite ? (
+                      <TouchableOpacity style={{ marginLeft: 10, opacity: 0.2 }}>
                         <Image source={{ uri: item.image }} style={styles.imageCharacters} />
-                      </TouchableOpacity>)}
-                    keyExtractor={(item, index) => index.toString()} />
-              </View>}
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.navigate('CharacterDetails', { character: item })}>
+                        <Image source={{ uri: item.image }} style={styles.imageCharacters} />
+                      </TouchableOpacity>
+                    )
+                  )}
+                  keyExtractor={(item, index) => index.toString()} />
+              </View>
+            )}
+
             
             {character.apprentices  && (dataCharactersState.filter(favChar => character.apprentices.includes(favChar.name)).length > 0 || dataCharactersState.find(favChar => favChar.name === character.apprentices)) &&
               <View style={styles.contentList}> 
@@ -167,11 +173,15 @@ export default function DetailCharacterScreen({route}) {
                       dataCharactersState.filter(favChar => character.apprentices.includes(favChar.name)) :
                         [dataCharactersState.find(favChar => favChar.name === character.apprentices)] }
                     renderItem={({ item }) => (
-                      <TouchableOpacity style={{ marginLeft: 10 }}
-                                        onPress={() => navigation.navigate('CharacterDetails', { character: item })}>
-                        {/* <Text>{item.name}</Text> */}
-                        <Image source={{ uri: item.image }} style={styles.imageCharacters} />
-                      </TouchableOpacity>)}
+                      ! isFavorite ? (
+                        <TouchableOpacity style={{ marginLeft: 10, opacity: 0.1 }}>
+                          <Image source={{ uri: item.image }} style={styles.imageCharacters} />
+                        </TouchableOpacity>
+                      ) : (
+                        <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.navigate('CharacterDetails', { character: item })}>
+                          <Image source={{ uri: item.image }} style={styles.imageCharacters} />
+                        </TouchableOpacity>
+                      ))}
                     keyExtractor={(item, index) => index.toString()} />
               </View>}
               <TouchableOpacity onPress={() => Linking.openURL(character.wiki)}>
@@ -203,10 +213,13 @@ const styles = StyleSheet.create({
   contentTop: { 
     flexDirection: 'row', 
     justifyContent: 'center',
+    paddingHorizontal: 25,
+    
   },
   contentTopF: { 
     flexDirection: 'row', 
     justifyContent: 'space-between',
+    paddingHorizontal: 25
   },
   iconBack: { 
     position: 'absolute', 
@@ -244,11 +257,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 20,
     fontWeight: 'bold', 
-    paddingBottom: 10
+    paddingBottom: 30
   },
   likeImage: {
     width: 30,
     height: 30,
+    tintColor: 'red',
+  },
+  binImage: {
+    width: 25,
+    height: 25,
     tintColor: 'red',
   },
   unlikeImage: {

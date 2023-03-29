@@ -17,10 +17,11 @@ import {
 const lightTheme = {
     ...NavigationDefaultTheme,
     ...PaperDarkTheme,
-    colors:{
-        ...NavigationDefaultTheme.colors,
-        ...PaperDefaultTheme.colors,
-        sideColor : '#ebb807',
+    colors: {
+      ...NavigationDefaultTheme.colors,
+      ...PaperDefaultTheme.colors,
+      sideColor: '#ebb807',
+      icon: '#000000' // définit la couleur des icônes en noir
     },
     images:{
         logo:require('../../assets/img/logoLightSide.png')
@@ -31,10 +32,11 @@ const lightTheme = {
 const darkTheme = {
     ...NavigationDarkTheme,
     ...PaperDarkTheme,
-    colors:{
-        ...NavigationDarkTheme.colors,
-        ...PaperDarkTheme.colors,
-        sideColor : '#eb0707',
+    colors: {
+      ...NavigationDarkTheme.colors,
+      ...PaperDarkTheme.colors,
+      sideColor: '#eb0707',
+      icon: '#ffffff' // définit la couleur des icônes en blanc
     },
     images:{
         logo:require('../../assets/img/logoDarkSide.png')
