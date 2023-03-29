@@ -1,3 +1,4 @@
+import { LOAD_CHARACTERS_SUCCESS } from "./constantes";
 
 
 const initialState = {
@@ -6,7 +7,7 @@ const initialState = {
   
 const charactersReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case 'LOAD_CHARACTERS_SUCCESS':
+        case LOAD_CHARACTERS_SUCCESS:
             //console.log(action.characters);
             return {
                 ...state,

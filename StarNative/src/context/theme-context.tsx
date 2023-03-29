@@ -23,18 +23,11 @@ const lightTheme = {
       sideColor: '#ebb807',
       icon: '#000000' // définit la couleur des icônes en noir
     },
-<<<<<<< HEAD
-    images: {
-      logo: require('../../assets/img/logoLightSide.png')
-    }
-  };
-=======
     images:{
         logo:require('../../assets/img/logoLightSide.png')
     },
     valeur: false
 };
->>>>>>> bda15fb730a8e732771bc20eedb32e7eb1519a89
 
 const darkTheme = {
     ...NavigationDarkTheme,
@@ -45,18 +38,11 @@ const darkTheme = {
       sideColor: '#eb0707',
       icon: '#ffffff' // définit la couleur des icônes en blanc
     },
-<<<<<<< HEAD
-    images: {
-      logo: require('../../assets/img/logoDarkSide.png')
-    }
-  };
-=======
     images:{
         logo:require('../../assets/img/logoDarkSide.png')
     },
     valeur: true
 };
->>>>>>> bda15fb730a8e732771bc20eedb32e7eb1519a89
 export type Theme = typeof  lightTheme;
 
 export type ThemeType = 'dark' | 'light';
