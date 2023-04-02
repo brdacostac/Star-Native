@@ -1,0 +1,3 @@
+### Star Native
+
+Nous sommes deux étudiants en deuxième année de BUT Informatique, Bruno DA COSTA CUNHA et Noan RANDON, et nous avons créé une application mobile en React Native. Notre application permet de visualiser les personnages de Star Wars, avec la possibilité de consulter la description de chaque personnage et de les rechercher via une barre de recherche. Elle permet également aux utilisateurs de sauvegarder leurs personnages préférés et de les retrouver facilement dans leur liste de favoris. En outre, notre application offre la possibilité de choisir entre un mode sombre et un mode clair, ainsi que de changer la langue entre le français et l'anglais.
