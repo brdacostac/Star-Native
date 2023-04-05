@@ -73,8 +73,7 @@ describe('favoritesReducer', () => {
     const expectedState = {
       favoriteCharacters: [character2]
     };
-
-    const action = deleteFavoriteCharacter(character1);
+    const action = { type: DELETE_FAVORITE_CHARACTER, payload: character1 };
 
     expect(favoritesReducer(initialState, action)).toEqual(expectedState);
   });
