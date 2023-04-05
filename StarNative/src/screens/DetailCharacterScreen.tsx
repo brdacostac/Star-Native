@@ -15,6 +15,7 @@ import en from '../globalization/en';
 import Like from "./../../assets/img/unlike.png";
 import Unlike from '../../assets/img/like.png';
 import Bin from '../../assets/img/poubelle.png';
+import { addFavorites, deleteFavorites } from '../actions/actionsFavorites';
 
 export default function DetailCharacterScreen({route}) {
   const character = route.params.character;
@@ -58,14 +59,14 @@ export default function DetailCharacterScreen({route}) {
   const addToFavorites = () => {
     if (!favoriteCharacters.find(favChar => favChar.name === character.name)) {
         setIsLiked(true);
-        dispatch({ type: ADD_FAVORITE_CHARACTER, payload: character });
+        dispatch(addFavorites(character));
       }
   };
 
   const deleteFromFavorites = () => {
     if (favoriteCharacters.find(favChar => favChar.name === character.name)) {
         setIsLiked(false);
-        dispatch({ type: DELETE_FAVORITE_CHARACTER, payload: character });
+        dispatch(deleteFavorites(character));
       }
   };
   
