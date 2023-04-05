@@ -1,10 +1,16 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, Text, Image, Animated, StyleSheet, ScrollView,Dimensions} from 'react-native';
 import {useTheme} from "../context/theme-context";
+import {Headline} from "react-native-paper";
+import { LanguageContext } from '../context/language-context';
+import fr from '../globalization/fr';
+import en from '../globalization/en';
 
 export default function HomeScreen() {
     const [fadeAnim] = useState(new Animated.Value(0));
     const {theme} = useTheme();
+    const { language, setLanguage } = useContext(LanguageContext);
+    const translations = language === 'en' ? en : fr;
 
     React.useEffect(() => {
         Animated.timing(fadeAnim, {
@@ -30,17 +36,9 @@ export default function HomeScreen() {
             </Animated.View>
             <Text style={[{color: theme.colors.sideColor}, styles.text]}>
                 Welcome to Star Native, the ultimate Star Wars encyclopedia!</Text>
-            <Text style={[{color: theme.colors.sideColor}, styles.text]}>
-                This application is your go-to source for all information related to the Star
-                Wars universe. Whether you're a die-hard fan or just starting to explore
-                the world of Star Wars, our app has everything you need to know about
-                your favorite characters, planets, and more. Built by developers Bruno
-                Cunha and Noan Randon, Star Native uses a Web API to bring you the most
-                up-to-date information about the Star Wars universe. From information of
-                your favorite characters to a comprehensive overview of the different
-                planets, our app has got you covered. So why wait? Download Star Native
-                today and start exploring the vast world of Star Wars!
-            </Text>
+            <Headline style={[{color: theme.colors.sideColor}, styles.text]}>
+                {translations.hometext}
+            </Headline>
       </View>
     </ScrollView>
   );
@@ -65,7 +63,7 @@ const styles = StyleSheet.create({
         textShadowColor: 'black',
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 1,
-        marginTop:-50,
+        marginTop:-70,
     },
     text: {
         fontSize: 18,
@@ -74,5 +72,6 @@ const styles = StyleSheet.create({
         textShadowColor: 'black',
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 1,
+        lineHeight: 22,
     },
 });

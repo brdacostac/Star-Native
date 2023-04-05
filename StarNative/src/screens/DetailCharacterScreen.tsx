@@ -71,6 +71,9 @@ export default function DetailCharacterScreen({route}) {
   };
   
   const formatWord = (word) => {
+    console.log(word);
+    if(Array.isArray(word))
+      word = word[0];
     word = word.trim();
     return word.charAt(0).toUpperCase() + word.slice(1);
     };
@@ -155,7 +158,7 @@ export default function DetailCharacterScreen({route}) {
                         <Image source={{ uri: item.image }} style={styles.imageCharacters} />
                       </TouchableOpacity>
                     ) : (
-                      <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.navigate('CharacterDetails', { character: item })}>
+                      <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.navigate('CharacterDetails', { character: item, isFavorite: true })}>
                         <Image source={{ uri: item.image }} style={styles.imageCharacters} />
                       </TouchableOpacity>
                     )
@@ -179,7 +182,7 @@ export default function DetailCharacterScreen({route}) {
                           <Image source={{ uri: item.image }} style={styles.imageCharacters} />
                         </TouchableOpacity>
                       ) : (
-                        <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.navigate('CharacterDetails', { character: item })}>
+                        <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.navigate('CharacterDetails', { character: item, isFavorite: true })}>
                           <Image source={{ uri: item.image }} style={styles.imageCharacters} />
                         </TouchableOpacity>
                       ))}
@@ -188,7 +191,6 @@ export default function DetailCharacterScreen({route}) {
               <TouchableOpacity onPress={() => Linking.openURL(character.wiki)}>
                 <Headline style={styles.wiki}>{translations.wiki}</Headline>
               </TouchableOpacity>
-        
             </ScrollView>
           </View>
           );

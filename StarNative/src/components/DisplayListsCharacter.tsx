@@ -7,7 +7,8 @@ import { LanguageContext } from '../context/language-context';
 import en from '../globalization/en';
 import fr from '../globalization/fr';
 import { ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
-
+import {useTheme} from "../context/theme-context";
+import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}) {
           const [searchTerm, setSearchTerm] = useState('');
@@ -16,6 +17,7 @@ export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}
           const navigation = useNavigation();
           const { language, setLanguage } = useContext(LanguageContext);
           const translations = language === 'en' ? en : fr;
+          const {isDarkTheme} = useTheme();
 
           useEffect(() => {
             setDataCharacters(dataCharactersParam);
@@ -42,7 +44,7 @@ export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}
                         textInputRef.current.blur();
                       }
                     }}>
-                      <Text >&times;</Text>
+                    <Text style={isDarkTheme && styles.croix}>&times;</Text>
                     </TouchableOpacity>
                   )} 
                   </View>
@@ -77,5 +79,7 @@ export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}
     textInput: {
         padding: 10,
     },
-
+    croix: {
+      color: "#FFFFFF",
+    }
 });

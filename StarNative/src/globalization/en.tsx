@@ -18,4 +18,5 @@ export default {
     language: 'Change your language',
     emptyFavorites: 'Empty Favorites',
     darkside: 'Dark Side',
+    hometext: 'This application is your go-to source for all information related to the Star Wars universe. Whether you\'re a die-hard fan or just starting to explore the world of Star Wars, our app has everything you need to know about your favorite characters, including their details. Additionally, it is possible to add your favorite characters to your favorites list for quick access. Developed by programmers Bruno Cunha and Noan Randon, Star Native uses a Web API to bring you the most up-to-date information about the Star Wars universe. From information on your favorite characters to a comprehensive overview of the different characters, our app has got you covered.'
   };
