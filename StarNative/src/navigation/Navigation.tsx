@@ -8,7 +8,6 @@ import {Image, Text} from "react-native";
 import CharactersNavigation from './CharactersNavigation';
 
 import {ThemeContextProvider, useTheme} from "../context/theme-context";
-import FavoritesScreen from '../screens/FavoritesScreen';
 import FavoritesNavigation from './FavoritesNavigation';
 import { LanguageContext } from '../context/language-context';
 import en from '../globalization/en';

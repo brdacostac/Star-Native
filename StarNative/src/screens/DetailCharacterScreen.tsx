@@ -1,14 +1,12 @@
-import { View, Text, FlatList, Image, TouchableOpacity, Linking, Button, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { View, FlatList, Image, TouchableOpacity, Linking, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_FAVORITE_CHARACTER, DELETE_FAVORITE_CHARACTER } from '../store/constantes';
 import { Ionicons } from '@expo/vector-icons';
 import { Animated, Easing } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {Headline} from "react-native-paper";
-import {ThemeContextProvider, useTheme} from "../context/theme-context";
+import {useTheme} from "../context/theme-context";
 import { LanguageContext } from '../context/language-context';
 import fr from '../globalization/fr';
 import en from '../globalization/en';
@@ -158,7 +156,7 @@ export default function DetailCharacterScreen({route}) {
                         <Image source={{ uri: item.image }} style={styles.imageCharacters} />
                       </TouchableOpacity>
                     ) : (
-                      <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.navigate('CharacterDetails', { character: item, isFavorite: true })}>
+                      <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.push('CharacterDetails', { character: item, isFavorite: true })}>
                         <Image source={{ uri: item.image }} style={styles.imageCharacters} />
                       </TouchableOpacity>
                     )
@@ -182,7 +180,7 @@ export default function DetailCharacterScreen({route}) {
                           <Image source={{ uri: item.image }} style={styles.imageCharacters} />
                         </TouchableOpacity>
                       ) : (
-                        <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.navigate('CharacterDetails', { character: item, isFavorite: true })}>
+                        <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.push('CharacterDetails', { character: item, isFavorite: true })}>
                           <Image source={{ uri: item.image }} style={styles.imageCharacters} />
                         </TouchableOpacity>
                       ))}

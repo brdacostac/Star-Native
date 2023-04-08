@@ -19,10 +19,8 @@ export const deleteFavorites = (favorites: Characters[]) => ({
 
 export const loadFavorites = async () => {
     try {
-        //await AsyncStorage.clear();
         const favorites = await AsyncStorage.getItem('favorites');
         if (favorites) {
-            console.log(JSON.parse(favorites));
             return JSON.parse(favorites);
         }
         return [];

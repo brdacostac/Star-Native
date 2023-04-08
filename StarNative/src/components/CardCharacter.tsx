@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, Image, StyleSheet, View} from 'react-native';
+import { Image, StyleSheet, View} from 'react-native';
 import {Headline} from "react-native-paper";
 
 

@@ -15,7 +15,7 @@ export default function FavoritesScreen() {
   const [localFavoriteCharacters, setLocalFavoriteCharacters] = useState([]);
   const { language, setLanguage } = useContext(LanguageContext);
   const translations = language === 'en' ? en : fr;
-  const {toggleThemeType, theme, isDarkTheme} = useTheme();
+  const {isDarkTheme} = useTheme();
 
 
   const favoriteCharacters = useSelector(state => state.favoritesReducer.favoriteCharacters);
