@@ -1,14 +1,11 @@
 import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import CardCharacter from './../components/CardCharacter';
-import axios from 'axios';
 import { useEffect, useState, useRef, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { LanguageContext } from '../context/language-context';
 import en from '../globalization/en';
 import fr from '../globalization/fr';
-import { ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 import {useTheme} from "../context/theme-context";
-import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 export default function DisplayListsCharacter({isSearchBar, dataCharactersParam}) {
           const [searchTerm, setSearchTerm] = useState('');

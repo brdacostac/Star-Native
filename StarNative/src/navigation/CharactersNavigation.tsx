@@ -2,7 +2,6 @@ import React from 'react';
 import CharactersScreen from '../screens/CharactersScreen';
 import DetailCharacterScreen from '../screens/DetailCharacterScreen';
 import {createStackNavigator} from '@react-navigation/stack';
-import {StyleSheet} from "react-native";
 
 
 export default function CharactersNavigation() {

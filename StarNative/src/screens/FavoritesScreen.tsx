@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
+import { View, Image, StyleSheet } from 'react-native';
 import DisplayListsCharacter from '../components/DisplayListsCharacter';
 import {Headline} from "react-native-paper";
 import en from "../globalization/en";
