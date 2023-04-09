@@ -34,8 +34,6 @@ export default function HomeScreen() {
                     style={styles.logo}
                 />
             </Animated.View>
-            <Text style={[{color: theme.colors.sideColor}, styles.text]}>
-                Welcome to Star Native, the ultimate Star Wars encyclopedia!</Text>
             <Headline style={[{color: theme.colors.sideColor}, styles.text]}>
                 {translations.hometext}
             </Headline>
