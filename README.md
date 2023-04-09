@@ -1,5 +1,3 @@
-### Star Native
-
 # **Star Native**
 
 ## Bonjour et bienvenue sur notre dépôt. ! 👋
@@ -37,7 +35,16 @@ Au cours de notre formation, nous avons développé une application mobile en Re
 
 - Installation
 
-Pour installer notre projet sur Visual Studio, vous devez d'abord vous assurer que vous avez installé .NET Multi-Platform App UI (Maui) dans Visual Studio. Si vous ne l'avez pas encore installé, vous pouvez le faire en cliquant sur l'installeur de Visual Studio, puis en sélectionnant 
+Pour installer notre projet, vous devez d'abord cloner le dépôt à l'aide de la commande suivante :
+git clone [URL_DU_REPO]
+
+Ensuite, déplacez-vous dans le répertoire StarNative et exécutez la commande suivante pour installer les dépendances :
+yarn install
+
+Enfin, lancez l'application en exécutant la commande :
+yarn expo start
+
+Il ne vous reste plus qu'à scanner le QR code généré avec l'application Expo Go pour exécuter l'application sur votre appareil mobile.
 
 
 *******
@@ -67,6 +74,8 @@ L'utilisateur a la possibilité de changer la langue de l'application, ou encore
 
 ## **Tests** :zap:
 Nous avons effectué un total de 10 tests : un sur un composant spécifique, et les neuf autres ont porté sur l'ensemble des actions et reducers.
+Pour réalisé les tests, il faut faire la commande suivante:
+npm test run
 <br/><img  width="300" src="images_readme/coverage.png"/><br/>
 
 <div id='ameliorations'/>
