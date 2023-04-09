@@ -78,7 +78,8 @@ L'utilisateur a la possibilité de changer la langue de l'application, ou encore
 Nous avons effectué un total de 10 tests : un sur un composant spécifique, et les neuf autres ont porté sur l'ensemble des actions et reducers.
 Pour réalisé les tests, il faut faire la commande suivante:
 npm test run
-<br/><img  width="300" src="Documentation/coverageReacr.png"/><br/>t
+<br/><img  width="300" src="Documentation/coverageReact.png"/><br/>
+
 <div id='ameliorations'/>
 
 ## **Améliorations** :bookmark:
