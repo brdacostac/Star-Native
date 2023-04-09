@@ -7,7 +7,7 @@
 Sommaire 
 <div align="center">
 
- [Introduction](#introduction) | [Team](#team) | [Installer notre projet](#installation) | [Tests](#tests) | [Ameliorations](#ameliorations)
+ [Introduction](#introduction) | [Team](#team) | [Installer notre projet](#installation) | [Fonctionnalités](#fonctionnalite) |[Tests](#tests) | [Ameliorations](#ameliorations)
  
 </div>
 
@@ -17,7 +17,7 @@ Sommaire
 
 ## **Introduction au projet** :bulb:
 
-Au cours de notre formation, nous avons développé une application mobile en React Native. Cette application permet aux utilisateurs de visualiser les personnages de Star Wars, de rechercher des personnages via une barre de recherche, et de consulter des descriptions détaillées de chaque personnage. Elle offre également la possibilité de sauvegarder des personnages dans une liste de favoris pour une consultation ultérieure. En outre, notre application propose un mode sombre ou clair, ainsi qu'un choix de langues entre le français et l'anglais. Pour en savoir plus sur les fonctionnalités de notre application, vous pouvez consulter la description détaillée dans la section dédiée.
+Au cours de notre formation, nous avons développé une application mobile en React Native. Cette application permet aux utilisateurs de visualiser les personnages de Star Wars, de rechercher des personnages via une barre de recherche, et de consulter des descriptions détaillées de chaque personnage. Elle offre également la possibilité de sauvegarder des personnages dans une liste de favoris pour une consultation ultérieure. En outre, notre application propose un mode sombre ou clair, ainsi qu'un choix de langues entre le français et l'anglais. Pour en savoir plus sur les fonctionnalités de notre application, vous pouvez consulter la description détaillée dans la section dédiée. Les sketchs sont présent dans le dossier Documentation.
 
 *******
 <div id='team'/>
@@ -72,12 +72,13 @@ Page Paramètres:
 "Mettre page paramètre" "mode sombre" "mode claire"
 L'utilisateur a la possibilité de changer la langue de l'application, ou encore de choisir entre un mode sombre et un mode claire, l'activation de celui-ci engendre le lancement de la musique de Star Wars. C'est pour cela qu'il est possible de couper le sond de l'application en appuyant sur l'icon "Sond".
 
+<div id='tests'/>
+
 ## **Tests** :zap:
 Nous avons effectué un total de 10 tests : un sur un composant spécifique, et les neuf autres ont porté sur l'ensemble des actions et reducers.
 Pour réalisé les tests, il faut faire la commande suivante:
 npm test run
-<br/><img  width="300" src="images_readme/coverage.png"/><br/>
-
+<br/><img  width="300" src="Documentation/coverageReacr.png"/><br/>t
 <div id='ameliorations'/>
 
 ## **Améliorations** :bookmark:
