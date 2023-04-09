@@ -1,19 +1,20 @@
-import { View, FlatList, Image, TouchableOpacity, Linking, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, Linking, Button, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
+import { ADD_FAVORITE_CHARACTER, DELETE_FAVORITE_CHARACTER } from '../store/constantes';
 import { Ionicons } from '@expo/vector-icons';
 import { Animated, Easing } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {Headline} from "react-native-paper";
-import {useTheme} from "../context/theme-context";
+import {ThemeContextProvider, useTheme} from "../context/theme-context";
 import { LanguageContext } from '../context/language-context';
 import fr from '../globalization/fr';
 import en from '../globalization/en';
 import Like from "./../../assets/img/unlike.png";
 import Unlike from '../../assets/img/like.png';
 import Bin from '../../assets/img/poubelle.png';
-import { addFavorites, deleteFavorites } from '../actions/actionsFavorites';
 
 export default function DetailCharacterScreen({route}) {
   const character = route.params.character;
@@ -26,17 +27,17 @@ export default function DetailCharacterScreen({route}) {
   const {theme} = useTheme();
   const { language, setLanguage } = useContext(LanguageContext);
   const translations = language === 'en' ? en : fr;
-  
+
 
   useEffect(() => {
     const favoriteCharacter = favoriteCharacters.find(
-      (favChar) => favChar.name === character.name
+        (favChar) => favChar.name === character.name
     );
     setIsLiked(favoriteCharacter !== undefined);
   }, [favoriteCharacters, character]);
 
   const [scaleValue, setScaleValue] = useState(new Animated.Value(1));
-  
+
   const handleImagePressIn = () => {
     Animated.timing(scaleValue, {
       toValue: 1.2,
@@ -44,7 +45,7 @@ export default function DetailCharacterScreen({route}) {
       useNativeDriver: true
     }).start();
   };
-  
+
   const handleImagePressOut = () => {
     Animated.timing(scaleValue, {
       toValue: 1,
@@ -53,146 +54,144 @@ export default function DetailCharacterScreen({route}) {
     }).start();
   };
 
-  
+
   const addToFavorites = () => {
     if (!favoriteCharacters.find(favChar => favChar.name === character.name)) {
-        setIsLiked(true);
-        dispatch(addFavorites(character));
-      }
+      setIsLiked(true);
+      dispatch({ type: ADD_FAVORITE_CHARACTER, payload: character });
+    }
   };
 
   const deleteFromFavorites = () => {
     if (favoriteCharacters.find(favChar => favChar.name === character.name)) {
-        setIsLiked(false);
-        dispatch(deleteFavorites(character));
-      }
+      setIsLiked(false);
+      dispatch({ type: DELETE_FAVORITE_CHARACTER, payload: character });
+    }
   };
-  
+
   const formatWord = (word) => {
-    console.log(word);
-    if(Array.isArray(word))
-      word = word[0];
     word = word.trim();
     return word.charAt(0).toUpperCase() + word.slice(1);
-    };
+  };
 
   return (
-    
-          <View  style={{paddingTop: 25}}>
-            <View style={isFavorite ? styles.contentTop : styles.contentTopF }>
+
+      <View  style={{paddingTop: 25}}>
+        <View style={isFavorite ? styles.contentTop : styles.contentTopF }>
+          <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={isFavorite && styles.iconBack }>
+            <Ionicons name="ios-arrow-back" size={30} style={{color: theme.colors.sideColor}} />
+          </TouchableOpacity>
+          <Headline style={styles.name}>{character.name}</Headline>
+          {! isFavorite &&
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={isFavorite && styles.iconBack }>
-                <Ionicons name="ios-arrow-back" size={30} style={{color: theme.colors.sideColor}} />
-              </TouchableOpacity> 
-              <Headline style={styles.name}>{character.name}</Headline>
-              {! isFavorite &&
-                <TouchableOpacity
                   style={styles.iconBin}
                   onPress={() => {
-                  deleteFromFavorites(), navigation.goBack() ;
+                    deleteFromFavorites(), navigation.goBack() ;
                   }}>
-                  <Image source={Bin}  style={styles.binImage} />
-                </TouchableOpacity>
-              }
-            </View>
+                <Image source={Bin}  style={styles.binImage} />
+              </TouchableOpacity>
+          }
+        </View>
 
-            <ScrollView style={{ paddingHorizontal: 25}}>
+        <ScrollView style={{ paddingHorizontal: 25}}>
 
-            <TouchableWithoutFeedback
+          <TouchableWithoutFeedback
               onPressIn={handleImagePressIn}
               onPressOut={handleImagePressOut}
-            >
-              <Animated.Image
+          >
+            <Animated.Image
                 source={{ uri: character.image }}
                 style={[styles.imageCharacter, { transform: [{ scale: scaleValue }]}]}
-              />
-            </TouchableWithoutFeedback>
-            {isFavorite &&
+            />
+          </TouchableWithoutFeedback>
+          {isFavorite &&
               <TouchableOpacity
-                style={styles.iconLike}
-                onPress={() => {
-                isLiked ? deleteFromFavorites() : addToFavorites();
-                }}>
+                  style={styles.iconLike}
+                  onPress={() => {
+                    isLiked ? deleteFromFavorites() : addToFavorites();
+                  }}>
                 {isLiked ? (
-                  <Image source={Like} style={styles.likeImage} />
+                    <Image source={Like} style={styles.likeImage} />
                 ) : (
-                  <Image source={Unlike} style={styles.unlikeImage} />
+                    <Image source={Unlike} style={styles.unlikeImage} />
                 )}
               </TouchableOpacity>
-            }
-            <View style={{ flexDirection: 'row', paddingBottom: 7, paddingTop: 20 }}>
-              <Headline style={styles.label}>{translations.gender}</Headline>
-              <Headline style={styles.value} >{character.gender ? formatWord(character.gender) : translations.unknown}</Headline>
-            </View>
-            <View style={styles.contentDescription}>
-              <Headline style={styles.label}>{translations.homeworld}</Headline>
-              <Headline style={styles.value} >{character.homeworld ? formatWord(character.homeworld) : translations.unknown}</Headline>
-            </View>
-            <View style={styles.contentDescription}>
-              <Headline style={styles.label}>{translations.height}</Headline>
-              <Headline style={styles.value} >{character.height ? character.height + " " + translations.meters : translations.unknown}</Headline>
-            </View>
-            <View style={styles.contentDescription}>
-              <Headline style={styles.label}>{translations.mass}</Headline>
-              <Headline style={styles.value} >{character.mass? character.mass + " " + translations.kilograms : translations.unknown}</Headline>
-            </View>
-            <View style={styles.contentDescription}>
-              <Headline style={styles.label}>{translations.species}</Headline>
-              <Headline style={styles.value} >{character.species ? formatWord(character.species) : translations.unknown}</Headline>
-            </View>
-            {character.masters && (dataCharactersState.filter(favChar => character.masters.includes(favChar.name)).length > 0 || dataCharactersState.find(favChar => favChar.name === character.masters)) && (
+          }
+          <View style={{ flexDirection: 'row', paddingBottom: 7, paddingTop: 20 }}>
+            <Headline style={styles.label}>{translations.gender}</Headline>
+            <Headline style={styles.value} >{character.gender ? formatWord(character.gender) : translations.unknown}</Headline>
+          </View>
+          <View style={styles.contentDescription}>
+            <Headline style={styles.label}>{translations.homeworld}</Headline>
+            <Headline style={styles.value} >{character.homeworld ? formatWord(character.homeworld) : translations.unknown}</Headline>
+          </View>
+          <View style={styles.contentDescription}>
+            <Headline style={styles.label}>{translations.height}</Headline>
+            <Headline style={styles.value} >{character.height ? character.height + " " + translations.meters : translations.unknown}</Headline>
+          </View>
+          <View style={styles.contentDescription}>
+            <Headline style={styles.label}>{translations.mass}</Headline>
+            <Headline style={styles.value} >{character.mass? character.mass + " " + translations.kilograms : translations.unknown}</Headline>
+          </View>
+          <View style={styles.contentDescription}>
+            <Headline style={styles.label}>{translations.species}</Headline>
+            <Headline style={styles.value} >{character.species ? formatWord(character.species) : translations.unknown}</Headline>
+          </View>
+          {character.masters && (dataCharactersState.filter(favChar => character.masters.includes(favChar.name)).length > 0 || dataCharactersState.find(favChar => favChar.name === character.masters)) && (
               <View style={styles.contentList}>
                 <Headline style={styles.label}>{translations.masters}</Headline>
                 <FlatList
-                  horizontal={true}
-                  data={Array.isArray(character.masters) ?
-                    dataCharactersState.filter(favChar => character.masters.includes(favChar.name)) :
-                    [dataCharactersState.find(favChar => favChar.name === character.masters)]
-                  }
-                  renderItem={({ item }) => (
-                    ! isFavorite ? (
-                      <TouchableOpacity style={{ marginLeft: 10, opacity: 0.2 }}>
-                        <Image source={{ uri: item.image }} style={styles.imageCharacters} />
-                      </TouchableOpacity>
-                    ) : (
-                      <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.push('CharacterDetails', { character: item, isFavorite: true })}>
-                        <Image source={{ uri: item.image }} style={styles.imageCharacters} />
-                      </TouchableOpacity>
-                    )
-                  )}
-                  keyExtractor={(item, index) => index.toString()} />
+                    horizontal={true}
+                    data={Array.isArray(character.masters) ?
+                        dataCharactersState.filter(favChar => character.masters.includes(favChar.name)) :
+                        [dataCharactersState.find(favChar => favChar.name === character.masters)]
+                    }
+                    renderItem={({ item }) => (
+                        ! isFavorite ? (
+                            <TouchableOpacity style={{ marginLeft: 10, opacity: 0.2 }}>
+                              <Image source={{ uri: item.image }} style={styles.imageCharacters} />
+                            </TouchableOpacity>
+                        ) : (
+                            <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.navigate('CharacterDetails', { character: item, isFavorite: true})}>
+                              <Image source={{ uri: item.image }} style={styles.imageCharacters} />
+                            </TouchableOpacity>
+                        )
+                    )}
+                    keyExtractor={(item, index) => index.toString()} />
               </View>
-            )}
+          )}
 
-            
-            {character.apprentices  && (dataCharactersState.filter(favChar => character.apprentices.includes(favChar.name)).length > 0 || dataCharactersState.find(favChar => favChar.name === character.apprentices)) &&
-              <View style={styles.contentList}> 
-                  <Headline style={styles.label}>{translations.apprentices}</Headline>
-                  <FlatList
+
+          {character.apprentices  && (dataCharactersState.filter(favChar => character.apprentices.includes(favChar.name)).length > 0 || dataCharactersState.find(favChar => favChar.name === character.apprentices)) &&
+              <View style={styles.contentList}>
+                <Headline style={styles.label}>{translations.apprentices}</Headline>
+                <FlatList
                     horizontal={true}
                     data={Array.isArray(character.apprentices) ?
-                      dataCharactersState.filter(favChar => character.apprentices.includes(favChar.name)) :
+                        dataCharactersState.filter(favChar => character.apprentices.includes(favChar.name)) :
                         [dataCharactersState.find(favChar => favChar.name === character.apprentices)] }
                     renderItem={({ item }) => (
-                      ! isFavorite ? (
-                        <TouchableOpacity style={{ marginLeft: 10, opacity: 0.1 }}>
-                          <Image source={{ uri: item.image }} style={styles.imageCharacters} />
-                        </TouchableOpacity>
-                      ) : (
-                        <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.push('CharacterDetails', { character: item, isFavorite: true })}>
-                          <Image source={{ uri: item.image }} style={styles.imageCharacters} />
-                        </TouchableOpacity>
-                      ))}
+                        ! isFavorite ? (
+                            <TouchableOpacity style={{ marginLeft: 10, opacity: 0.1 }}>
+                              <Image source={{ uri: item.image }} style={styles.imageCharacters} />
+                            </TouchableOpacity>
+                        ) : (
+                            <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.navigate('CharacterDetails', { character: item, isFavorite: true})}>
+                              <Image source={{ uri: item.image }} style={styles.imageCharacters} />
+                            </TouchableOpacity>
+                        ))}
                     keyExtractor={(item, index) => index.toString()} />
               </View>}
-              <TouchableOpacity onPress={() => Linking.openURL(character.wiki)}>
-                <Headline style={styles.wiki}>{translations.wiki}</Headline>
-              </TouchableOpacity>
-            </ScrollView>
-          </View>
-          );
-        }
+          <TouchableOpacity onPress={() => Linking.openURL(character.wiki)}>
+            <Headline style={styles.wiki}>{translations.wiki}</Headline>
+          </TouchableOpacity>
+
+        </ScrollView>
+      </View>
+  );
+}
 
 
 const styles = StyleSheet.create({
@@ -206,24 +205,24 @@ const styles = StyleSheet.create({
     marginLeft: '10%',
     fontSize: 20,
   },
-  name: { 
-    fontWeight: 'bold', 
-    fontSize: 30, 
-    textAlign: 'center', 
+  name: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    textAlign: 'center',
   },
-  contentTop: { 
-    flexDirection: 'row', 
+  contentTop: {
+    flexDirection: 'row',
     justifyContent: 'center',
     paddingHorizontal: 25,
-    
+
   },
-  contentTopF: { 
-    flexDirection: 'row', 
+  contentTopF: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 25
   },
-  iconBack: { 
-    position: 'absolute', 
+  iconBack: {
+    position: 'absolute',
     left: 0,
   },
   imageCharacter: {
@@ -234,30 +233,30 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     margin: 20
   },
-  iconLike: { 
-    marginTop: 2, 
+  iconLike: {
+    marginTop: 2,
     alignSelf: 'center'
   },
-  contentDescription: { 
-    flexDirection: 'row', 
-    paddingBottom: 7 
+  contentDescription: {
+    flexDirection: 'row',
+    paddingBottom: 7
   },
-  contentList: { 
-    flexDirection: 'column', 
-    alignItems: 'flex-start', 
-    marginBottom: 20 
+  contentList: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    marginBottom: 20
   },
-  imageCharacters: { 
-    width: 65, 
-    height: 65, 
-    borderRadius: 50, 
-    borderWidth: 2, 
-    borderColor: '#333' 
+  imageCharacters: {
+    width: 65,
+    height: 65,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#333'
   },
   wiki: {
     marginBottom: 10,
     fontSize: 20,
-    fontWeight: 'bold', 
+    fontWeight: 'bold',
     paddingBottom: 30
   },
   likeImage: {
@@ -275,8 +274,8 @@ const styles = StyleSheet.create({
     height: 30,
     tintColor: 'black',
   },
-  iconBin: { 
-    marginTop: 2, 
+  iconBin: {
+    marginTop: 2,
     right: 0,
   },
 });
