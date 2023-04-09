@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, Image, StyleSheet, View} from 'react-native';
+import { Image, StyleSheet, View} from 'react-native';
 import {Headline} from "react-native-paper";
 
 
@@ -6,8 +6,8 @@ import {Headline} from "react-native-paper";
 export default function CardCharacter({ props: CharactersListItemProps }) {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20 }} >
-      <Image source={{ uri: CharactersListItemProps.image }} style={styles.images} />
-      <Headline style={styles.name}>{CharactersListItemProps.name}</Headline>
+      <Image  testID="character-image" source={{ uri: CharactersListItemProps.image }} style={styles.images} />
+      <Headline testID="character-name" style={styles.name}>{CharactersListItemProps.name}</Headline>
     </View>
   );
 }

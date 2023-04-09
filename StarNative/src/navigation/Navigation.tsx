@@ -8,7 +8,6 @@ import {Image, Text} from "react-native";
 import CharactersNavigation from './CharactersNavigation';
 
 import {ThemeContextProvider, useTheme} from "../context/theme-context";
-import FavoritesScreen from '../screens/FavoritesScreen';
 import FavoritesNavigation from './FavoritesNavigation';
 import { LanguageContext } from '../context/language-context';
 import en from '../globalization/en';
@@ -71,28 +70,28 @@ function Navigation() {
                                                options={{
                                                    headerShown: false,
                                                    tabBarIcon: ({color,focused}) => <BarIcon name="iconHome" color={color} focused={focused}/>,
-                                                   tabBarLabel: ({focused})=> <BarLabel title={'Home'} focused={focused} />
+                                                   tabBarLabel: ({focused})=> <BarLabel title={translations.home} focused={focused} />
                                                }}/>
                     <BottomTabNavigator.Screen name="Characters" component={CharactersNavigation}
                                                options={{
                                                    title: 'Characters',
                                                    headerShown: false,
                                                    tabBarIcon: ({color,focused}) => <BarIcon name="iconCharacteres" color={color} focused={focused}/>,
-                                                   tabBarLabel: ({focused})=> <BarLabel title={'Characters'} focused={focused} />
+                                                   tabBarLabel: ({focused})=> <BarLabel title={translations.characters} focused={focused} />
                                                }}/>
                     <BottomTabNavigator.Screen name="Favorites" component={FavoritesNavigation}
                                                options={{
                                                    title: 'Favorites',
                                                    headerShown: false,
                                                    tabBarIcon: ({color,focused}) => <BarIcon name="iconFavorites" color={color} focused={focused}/>,
-                                                   tabBarLabel: ({focused})=> <BarLabel title={'Favorites'} focused={focused} />
+                                                   tabBarLabel: ({focused})=> <BarLabel title={translations.favorites} focused={focused} />
                                                }}/>
                     <BottomTabNavigator.Screen name="Settings" component={SettingsScreen}
                                                options={{
                                                    title: 'Settings',
                                                    headerShown: false,
                                                    tabBarIcon: ({color, focused}) => <BarIcon name="iconSettings" color={color} focused={focused}/>,
-                                                   tabBarLabel: ({focused})=> <BarLabel title={'Settings'} focused={focused} />
+                                                   tabBarLabel: ({focused})=> <BarLabel title={translations.settings} focused={focused} />
                                                }}/>
                 </BottomTabNavigator.Navigator>
 

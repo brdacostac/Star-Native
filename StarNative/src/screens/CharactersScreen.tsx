@@ -1,16 +1,16 @@
-import {View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
-import CardCharacter from './../components/CardCharacter';
-import axios from 'axios';
-import { useEffect, useState, useRef } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {View, Text } from 'react-native';
+import { useEffect, useState, useRef, useContext } from 'react';
 import DisplayListsCharacter from '../components/DisplayListsCharacter';
 import { useSelector } from 'react-redux';
+import { LanguageContext } from '../context/language-context';
+import fr from '../globalization/fr';
+import en from '../globalization/en';
 
 
 export default function CharactersScreen() {
   const dataCharactersState = useSelector((state) => state.charactersReducer.characters);
-
+  const { language, setLanguage } = useContext(LanguageContext);
+  const translations = language === 'en' ? en : fr;
   const [dataCharacters, setDataCharacters] = useState([]);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function CharactersScreen() {
     <DisplayListsCharacter isSearchBar={true} dataCharactersParam={dataCharacters} />
   ) : (
     <View>
-      <Text>Problème avec les données</Text>
+      <Text>{translations.problem}</Text>
     </View>
   );
 }
