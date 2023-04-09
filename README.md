@@ -55,21 +55,21 @@ Il ne vous reste plus qu'à scanner le QR code généré avec l'application Expo
  
 Notre application Stars native se compose de 4 pages (Menu, Personnages, Favoris, Paramètres);
 Page Menu:
-"Mettre page menu"
+<br/><img  width="300" src="Documentation/Screenshot_20230409-234123_Expo-Go.png"/><br/>
 Ici vous pouvez trouvez une description de notre application, avec notre logo.
 
 Page Personnages:
-"Mette=re image personnages"
+<br/><img  width="300" src="Documentation/Screenshot_20230409-234130_Expo-Go.png"/><br/>
 Sur cette page, se trouve la liste des personnages de Stars Wars qu'on récupère d'une API(mettre api), l'utilisateur à la possibilité de rechercher un personnage via la barre de recherche ou encore de cliquer sur un personnage pour avoir ca description, sur l'image ci-dessous vous pouvez voir la description du personnage "Luke Skywalker", il est possible de liker un peronnage en appuyant sur le Star Trooper.
-"mettre image luke"
+<br/><img  width="300" src="Documentation/Screenshot_20230409-234135_Expo-Go.png"/><br/>
 
 Page Favoris:
-"Mettre image favoris"
+<br/><img  width="300" src="Documentation/Screenshot_20230409-234144_Expo-Go.png"/><br/>
 Sur la page favoris, l'utilisateur peut consulté les personnages qu'il a mis en favoris, et puis de nouveau cliquer dessus pour avoir sa description cette fois si il ne peut liker le personnage mais le supprimer de sa liste de like avec l'icon "Poubelle".
-"Mettre image de description"
+<br/><img  width="300" src="Documentation/Screenshot_20230409-234208_Expo-Go.png"/><br/>
 
 Page Paramètres:
-"Mettre page paramètre" "mode sombre" "mode claire"
+<br/><img  width="300" src="Documentation/Screenshot_20230409-234213_Expo-Go.png"/><img  width="300" src="Documentation/Screenshot_20230409-234223_Expo-Go.png"/><br/>
 L'utilisateur a la possibilité de changer la langue de l'application, ou encore de choisir entre un mode sombre et un mode claire, l'activation de celui-ci engendre le lancement de la musique de Star Wars. C'est pour cela qu'il est possible de couper le sond de l'application en appuyant sur l'icon "Sond".
 
 <div id='tests'/>
